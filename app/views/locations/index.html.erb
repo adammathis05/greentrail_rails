@@ -1,5 +1,9 @@
+<h1>Locations</h1>
+
 <ul>
   <% @locations.each do |location| %>
-  <li><%= location %></li>
+  <li>
+    <strong><%= location.name %></strong>
+  </li>
 <% end %>
 </ul>
