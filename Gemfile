@@ -47,6 +47,9 @@ group :development, :test do
   # Generate fake data for testing
   gem 'factory_bot_rails'
   gem 'faker' 
+
+  # Use RSpec for testing 
+  gem 'rspec-rails', '~> 7.0.0'
 end
 
 group :development do
