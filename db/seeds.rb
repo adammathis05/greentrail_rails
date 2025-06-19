@@ -10,8 +10,27 @@
 
 require 'factory_bot'
 require 'faker'
-
 include FactoryBot::Syntax::Methods
-
 FactoryBot.find_definitions
+
+5.times do
+  country = create(:country)
+  province = create(:province, country: country)
+  town = create(:town, province: province)
+  community = create(:community, town: town)
+  site = create(:site, town: town, community: community)
+
+  3.times do
+    provider = create(:provider, site: site, community: community)
+    tag = create(:tag)
+    create(:provider_tag, provider: provider, tag: tag)
+  end
+
+  event = create(:event, community: community, site: site)
+  create(:event_series, event: event, community: community, site: site)
+end
+
+5.times do
+  create(:traveler)
+end
 
