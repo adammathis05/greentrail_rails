@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_06_19_195948) do
+ActiveRecord::Schema[7.2].define(version: 2025_06_19_202905) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -19,6 +19,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_19_195948) do
     t.bigint "town_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "description", null: false
+    t.bigint "community_center_site_id"
+    t.index ["community_center_site_id"], name: "index_communities_on_community_center_site_id"
     t.index ["town_id"], name: "index_communities_on_town_id"
   end
 
@@ -118,6 +121,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_19_195948) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "communities", "sites", column: "community_center_site_id"
   add_foreign_key "communities", "towns"
   add_foreign_key "event_series", "events"
   add_foreign_key "events", "communities"
