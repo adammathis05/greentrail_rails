@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_06_19_205257) do
+ActiveRecord::Schema[7.2].define(version: 2025_06_19_211821) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -75,6 +75,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_19_205257) do
     t.bigint "tag_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["provider_id", "tag_id"], name: "index_provider_tags_on_provider_id_and_tag_id", unique: true
     t.index ["provider_id"], name: "index_provider_tags_on_provider_id"
     t.index ["tag_id"], name: "index_provider_tags_on_tag_id"
   end
@@ -130,10 +131,11 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_19_205257) do
   end
 
   create_table "travelers", force: :cascade do |t|
-    t.string "name"
     t.string "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "first"
+    t.string "last"
   end
 
   add_foreign_key "communities", "sites", column: "community_center_site_id"
