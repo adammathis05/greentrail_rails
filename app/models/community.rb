@@ -6,6 +6,8 @@ class Community < ApplicationRecord
   has_many :providers, dependent: :destroy
   has_many :events, dependent: :destroy
 
+  alias_attribute :community_name, :name
+
   validates :community_name, presence: true, format: { with: /\A[a-zA-Z\s]+\z/, message: "only allows letters and spaces" }
   validates :description, presence: true
 end

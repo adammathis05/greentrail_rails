@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_06_19_202905) do
+ActiveRecord::Schema[7.2].define(version: 2025_06_19_205257) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -36,7 +36,16 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_19_202905) do
     t.bigint "event_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "community_id", null: false
+    t.bigint "site_id", null: false
+    t.date "date"
+    t.string "day_of_week"
+    t.time "time"
+    t.string "category"
+    t.text "description"
+    t.index ["community_id"], name: "index_event_series_on_community_id"
     t.index ["event_id"], name: "index_event_series_on_event_id"
+    t.index ["site_id"], name: "index_event_series_on_site_id"
   end
 
   create_table "events", force: :cascade do |t|
@@ -45,7 +54,11 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_19_202905) do
     t.bigint "community_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.date "date"
+    t.string "category"
+    t.bigint "site_id", null: false
     t.index ["community_id"], name: "index_events_on_community_id"
+    t.index ["site_id"], name: "index_events_on_site_id"
   end
 
   create_table "locations", force: :cascade do |t|
@@ -72,6 +85,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_19_202905) do
     t.bigint "community_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "service"
+    t.text "description"
     t.index ["community_id"], name: "index_providers_on_community_id"
     t.index ["site_id"], name: "index_providers_on_site_id"
   end
@@ -123,8 +138,11 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_19_202905) do
 
   add_foreign_key "communities", "sites", column: "community_center_site_id"
   add_foreign_key "communities", "towns"
+  add_foreign_key "event_series", "communities"
   add_foreign_key "event_series", "events"
+  add_foreign_key "event_series", "sites"
   add_foreign_key "events", "communities"
+  add_foreign_key "events", "sites"
   add_foreign_key "provider_tags", "providers"
   add_foreign_key "provider_tags", "tags"
   add_foreign_key "providers", "communities"
