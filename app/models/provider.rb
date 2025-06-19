@@ -7,6 +7,6 @@ class Provider < ApplicationRecord
 
   alias_attribute :provider_name, :name
 
-  validates :provider_name, presence: true, format: { with: /\A[a-zA-Z\s]+\z/, message: "only allows letters and spaces" }
-  validates :service, presence: true, format: { with: /\A[a-zA-Z\s]+\z/, message: "only allows letters and spaces" }
+  validates :provider_name, presence: true
+  validates :service, presence: true
 end

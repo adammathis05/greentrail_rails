@@ -1,6 +1,6 @@
 class AddForeignKeysToLocations < ActiveRecord::Migration[7.2]
   def change
-    add_column :locations, :country_id, :integer
-    add_column :locations, :province_id, :integer
+    add_reference :locations, :country, foreign_key: { to_table: :locations }
+    add_reference :locations, :province, foreign_key: { to_table: :locations }
   end
 end

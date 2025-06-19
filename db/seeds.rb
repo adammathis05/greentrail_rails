@@ -7,30 +7,41 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+require 'factory_bot_rails'
 
-require 'factory_bot'
-require 'faker'
-include FactoryBot::Syntax::Methods
-FactoryBot.find_definitions
+# Explicitly include FactoryBot methods
+class Seed
+  include FactoryBot::Syntax::Methods
 
-5.times do
-  country = create(:country)
-  province = create(:province, country: country)
-  town = create(:town, province: province)
-  community = create(:community, town: town)
-  site = create(:site, town: town, community: community)
-
-  3.times do
-    provider = create(:provider, site: site, community: community)
-    tag = create(:tag)
-    create(:provider_tag, provider: provider, tag: tag)
+  def self.run
+    new.run
   end
 
-  event = create(:event, community: community, site: site)
-  create(:event_series, event: event, community: community, site: site)
+  def run
+    5.times do
+      country = create(:country)
+      province = create(:province, country: country)
+      town = create(:town, province: province)
+
+      community = create(:community, town: town)
+      site = create(:site, town: town, community: community)
+
+    3.times do
+      provider = create(:provider, site: site, community: community)
+      tag = create(:tag)
+      create(:provider_tag, provider: provider, tag: tag)
+    end
+
+    event = create(:event, community: community, site: site)
+    create(:event_series, event: event, community: community, site: site)
+  end
+
+      5.times do
+      create(:traveler)
+    end
+  end
 end
 
-5.times do
-  create(:traveler)
-end
+Seed.run
 
+Faker::UniqueGenerator.clear

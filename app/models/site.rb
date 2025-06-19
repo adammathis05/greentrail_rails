@@ -7,5 +7,4 @@ class Site < ApplicationRecord
   alias_attribute :site_name, :name
 
   validates :site_name, presence: true
-  validates :site_name, format: { with: /\A[a-zA-Z\s]+\z/, message: "only allows letters and spaces" }
 end

@@ -6,5 +6,4 @@ class Event < ApplicationRecord
   alias_attribute :event_name, :title
 
   validates :event_name, :date, :category, :description, presence: true
-  validates :event_name, format: { with: /\A[a-zA-Z\s]+\z/, message: "only allows letters and spaces" }
 end
