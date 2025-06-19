@@ -1,4 +1,4 @@
-class Province < ApplicationRecord
-  belongs_to :country
-  has_many :towns, dependent: :destroy
+class Province < Location
+  belongs_to :country, class_name: "Country"
+  has_many :towns, foreign_key: :province_id, class_name: "Town"
 end

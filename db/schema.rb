@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_06_19_191342) do
+ActiveRecord::Schema[7.2].define(version: 2025_06_19_224011) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -19,13 +19,10 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_19_191342) do
     t.bigint "town_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "description", null: false
+    t.bigint "community_center_site_id"
+    t.index ["community_center_site_id"], name: "index_communities_on_community_center_site_id"
     t.index ["town_id"], name: "index_communities_on_town_id"
-  end
-
-  create_table "countries", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "event_series", force: :cascade do |t|
@@ -33,7 +30,16 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_19_191342) do
     t.bigint "event_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "community_id", null: false
+    t.bigint "site_id", null: false
+    t.date "date"
+    t.string "day_of_week"
+    t.time "time"
+    t.string "category"
+    t.text "description"
+    t.index ["community_id"], name: "index_event_series_on_community_id"
     t.index ["event_id"], name: "index_event_series_on_event_id"
+    t.index ["site_id"], name: "index_event_series_on_site_id"
   end
 
   create_table "events", force: :cascade do |t|
@@ -42,7 +48,11 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_19_191342) do
     t.bigint "community_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.date "date"
+    t.string "category"
+    t.bigint "site_id", null: false
     t.index ["community_id"], name: "index_events_on_community_id"
+    t.index ["site_id"], name: "index_events_on_site_id"
   end
 
   create_table "locations", force: :cascade do |t|
@@ -50,6 +60,10 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_19_191342) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "type"
+    t.bigint "country_id"
+    t.bigint "province_id"
+    t.index ["country_id"], name: "index_locations_on_country_id"
+    t.index ["province_id"], name: "index_locations_on_province_id"
   end
 
   create_table "provider_tags", force: :cascade do |t|
@@ -57,6 +71,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_19_191342) do
     t.bigint "tag_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["provider_id", "tag_id"], name: "index_provider_tags_on_provider_id_and_tag_id", unique: true
     t.index ["provider_id"], name: "index_provider_tags_on_provider_id"
     t.index ["tag_id"], name: "index_provider_tags_on_tag_id"
   end
@@ -67,58 +82,55 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_19_191342) do
     t.bigint "community_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "service"
+    t.text "description"
     t.index ["community_id"], name: "index_providers_on_community_id"
     t.index ["site_id"], name: "index_providers_on_site_id"
   end
 
-  create_table "provinces", force: :cascade do |t|
-    t.string "name"
-    t.bigint "country_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["country_id"], name: "index_provinces_on_country_id"
-  end
-
   create_table "sites", force: :cascade do |t|
     t.string "name"
-    t.bigint "town_id", null: false
-    t.bigint "community_id", null: false
+    t.bigint "town_id"
+    t.bigint "community_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "category"
+    t.string "description"
+    t.string "street_address"
+    t.decimal "latitude"
+    t.decimal "longitude"
+    t.string "map_link"
     t.index ["community_id"], name: "index_sites_on_community_id"
     t.index ["town_id"], name: "index_sites_on_town_id"
   end
 
   create_table "tags", force: :cascade do |t|
-    t.string "name"
+    t.string "tag_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "towns", force: :cascade do |t|
-    t.string "name"
-    t.bigint "province_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["province_id"], name: "index_towns_on_province_id"
   end
 
   create_table "travelers", force: :cascade do |t|
-    t.string "name"
     t.string "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "first"
+    t.string "last"
   end
 
-  add_foreign_key "communities", "towns"
+  add_foreign_key "communities", "locations", column: "town_id"
+  add_foreign_key "communities", "sites", column: "community_center_site_id"
+  add_foreign_key "event_series", "communities"
   add_foreign_key "event_series", "events"
+  add_foreign_key "event_series", "sites"
   add_foreign_key "events", "communities"
+  add_foreign_key "events", "sites"
+  add_foreign_key "locations", "locations", column: "country_id"
+  add_foreign_key "locations", "locations", column: "province_id"
   add_foreign_key "provider_tags", "providers"
   add_foreign_key "provider_tags", "tags"
   add_foreign_key "providers", "communities"
   add_foreign_key "providers", "sites"
-  add_foreign_key "provinces", "countries"
   add_foreign_key "sites", "communities"
-  add_foreign_key "sites", "towns"
-  add_foreign_key "towns", "provinces"
+  add_foreign_key "sites", "locations", column: "town_id"
 end

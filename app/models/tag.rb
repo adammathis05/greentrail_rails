@@ -1,3 +1,8 @@
 class Tag < ApplicationRecord
-    has_and_belongs_to_many :providers, join_table: :provider_tags
+  has_many :provider_tags, dependent: :destroy
+  has_many :providers, through: :provider_tags
+
+  alias_attribute :name, :tag_name
+
+  validates :name, presence: true, uniqueness: true
 end
