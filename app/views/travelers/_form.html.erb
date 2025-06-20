@@ -1,0 +1,31 @@
+<%= form_with(model: traveler, local: true) do |form| %>
+  <% if traveler.errors.any? %>
+    <div class="mb-4 p-4 bg-red-100 border border-red-300 text-red-800 rounded">
+      <h2 class="font-semibold text-red-700">Please fix the following errors:</h2>
+      <ul class="mt-2 list-disc pl-5">
+        <% traveler.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-4">
+    <%= form.label :first, class: "block text-sm font-medium text-gray-700" %>
+    <%= form.text_field :first, class: "mt-1 block w-full border-gray-300 rounded-md shadow-sm" %>
+  </div>
+
+  <div class="mb-4">
+    <%= form.label :last, class: "block text-sm font-medium text-gray-700" %>
+    <%= form.text_field :last, class: "mt-1 block w-full border-gray-300 rounded-md shadow-sm" %>
+  </div>
+
+  <div class="mb-4">
+    <%= form.label :email, class: "block text-sm font-medium text-gray-700" %>
+    <%= form.email_field :email, class: "mt-1 block w-full border-gray-300 rounded-md shadow-sm" %>
+  </div>
+
+  <div class="mt-6">
+    <%= form.submit "Save", class: "bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition" %>
+  </div>
+<% end %>

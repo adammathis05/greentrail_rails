@@ -1,0 +1,18 @@
+<div class="max-w-3xl mx-auto text-center mt-20 px-4">
+  <h1 class="text-4xl font-bold text-gray-800 mb-6">Welcome to GreenTrail</h1>
+
+  <% if current_traveler %>
+    <p class="text-lg text-gray-600 mb-4">
+      Welcome back, <strong><%= current_traveler.full_name %></strong>!
+    </p>
+    <%= link_to "Go to Dashboard", traveler_path(current_traveler),
+                class: "inline-block bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition" %>
+  <% else %>
+    <div class="mt-6 flex flex-col sm:flex-row gap-4 justify-center">
+      <%= link_to "Sign Up", new_traveler_path,
+                  class: "bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 transition" %>
+      <%= link_to "Browse Communities", communities_path,
+                  class: "border border-blue-600 text-blue-600 px-6 py-2 rounded hover:bg-blue-50 transition" %>
+    </div>
+  <% end %>
+</div>
