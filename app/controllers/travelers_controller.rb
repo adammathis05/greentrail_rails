@@ -6,7 +6,8 @@ class TravelersController < ApplicationController
   def create
     @traveler = Traveler.new(traveler_params)
     if @traveler.save
-      redirect_to @traveler, notice: "Account created successfully."
+      flash[:notice] = "Profile created successfully"
+      redirect_to @traveler
     else
       render :new, status: :unprocessable_entity
     end
@@ -23,7 +24,8 @@ class TravelersController < ApplicationController
   def update
     @traveler = Traveler.find(params[:id])
     if @traveler.update(traveler_params)
-      redirect_to @traveler, notice: "Profile updated."
+      flash[:notice] = "Profile updated successfully"
+      redirect_to @traveler
     else
       render :edit, status: :unprocessable_entity
     end
