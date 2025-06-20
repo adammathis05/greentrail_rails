@@ -1,0 +1,18 @@
+<nav class="bg-white shadow-sm">
+  <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+    <%= link_to "GreenTrail", root_path, class: "text-xl font-bold text-gray-800 hover:text-green-600" %>
+
+    <div class="flex items-center space-x-4">
+      <% if current_traveler %>
+        <span class="text-gray-600">Welcome, <%= current_traveler.first %></span>
+        <%= link_to "Dashboard", traveler_path(current_traveler),
+                    class: "text-gray-700 hover:text-blue-600" %>
+        <%= link_to "Log Out", "#", class: "text-red-600 hover:underline" %> <!-- Replace later -->
+      <% else %>
+        <%= link_to "Sign Up", new_traveler_path,
+                    class: "text-gray-700 hover:text-blue-600" %>
+        <%= link_to "Log In", "#", class: "text-gray-700 hover:text-blue-600" %> <!-- Replace later -->
+      <% end %>
+    </div>
+  </div>
+</nav>
