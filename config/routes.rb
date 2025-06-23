@@ -9,7 +9,14 @@ Rails.application.routes.draw do
   get "travelers/create"
   get "travelers/edit"
   get "travelers/update"
-  get "locations" => "locations#index"
+  get "locations" => "locations#index", 
+  controllers: {
+  registrations: "travelers/registrations",
+  sessions: "travelers/sessions",
+  passwords: "travelers/passwords",
+  confirmations: "travelers/confirmations",
+  unlocks: "travelers/unlocks"
+}
 
   resources :travelers, only: [:new, :create, :show, :edit, :update, :destroy]
 

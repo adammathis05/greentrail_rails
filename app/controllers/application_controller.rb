@@ -14,6 +14,12 @@ class ApplicationController < ActionController::Base
   
   protected
 
+  def redirect_if_authenticated
+    if traveler_signed_in?
+      redirect_to traveler_path(current_traveler), notice: "You're already signed in."
+    end
+  end
+
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [:first, :last])
     devise_parameter_sanitizer.permit(:account_update, keys: [:first, :last])
