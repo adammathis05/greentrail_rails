@@ -11,6 +11,14 @@
   <body class="bg-gray-50 text-gray-900">
   <%= render 'shared/navbar' %>
 
+  <% flash.each do |key, message| %>
+  <div class="mx-auto max-w-2xl mt-4">
+    <div class="<%= flash_class_for(key) %> px-4 py-3 rounded relative" role="alert">
+      <span class="block sm:inline"><%= message %></span>
+    </div>
+  </div>
+  <% end %>
+
   <% flash.each do |type, message| %>
     <% alert_class = case type.to_sym
       when :notice then "bg-green-100 text-green-800 border-green-300"
