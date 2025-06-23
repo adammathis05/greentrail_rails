@@ -1,6 +1,6 @@
 class LocationsController < ApplicationController
 
-    before_action :authenticate_traveler!, unless: :public_page?
+  before_action :authenticate_traveler!, unless: :public_page?
   before_action :set_location, only: [:show]
 
   def index
@@ -8,28 +8,26 @@ class LocationsController < ApplicationController
   end
 
   def show
+    @location = Location.find(params[:id])
+
     case @location
     when Country
-      @provinces = @location.provinces
-      render :country
+      @children = @location.provinces
+      @child_type = "Provinces"
     when Province
-      @towns = @location.towns
-      render :province
+      @children = @location.towns
+      @child_type = "Towns"
     when Town
-      if @location.community
-        redirect_to community_path(@location.community)
+      community = @location.community
+      if community.present?
+        redirect_to community_path(community.slug) and return
       else
-        redirect_to locations_path, alert: "No community found for this town."
+        redirect_to locations_path, alert: "This town does not have a community yet." and return
       end
     else
-      redirect_to locations_path, alert: "Invalid location."
+      @children = []
+      @child_type = nil
     end
-  end
-
-  private
-
-  def set_location
-    @location = Location.find(params[:id])
   end
 
 end

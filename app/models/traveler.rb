@@ -6,6 +6,7 @@ class Traveler < ApplicationRecord
   validates :first, :last, :email, presence: true
 
   enum role: { traveler: "traveler", admin: "admin" }
+  before_validation :assign_default_role, on: :create
 
   # Validations
   validates :role, presence: true
@@ -17,5 +18,11 @@ class Traveler < ApplicationRecord
 
   def full_name
     "#{first} #{last}"
+  end
+
+  private
+
+  def assign_default_role
+    self.role ||= :traveler
   end
 end
