@@ -51,7 +51,7 @@ group :development, :test do
   gem 'faker' 
 
   # Use RSpec for testing 
-  gem 'rspec-rails', '~> 7.0.0'
+  gem 'rspec-rails', '~> 8.0.1'
 end
 
 group :development do
