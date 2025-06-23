@@ -1,17 +1,17 @@
 class TravelersController < ApplicationController
-  def new
-    @traveler = Traveler.new
-  end
+  # def new
+  #   @traveler = Traveler.new
+  # end
 
-  def create
-    @traveler = Traveler.new(traveler_params)
-    if @traveler.save
-      flash[:notice] = "Profile created successfully"
-      redirect_to @traveler
-    else
-      render :new, status: :unprocessable_entity
-    end
-  end
+  # def create
+  #   @traveler = Traveler.new(traveler_params)
+  #   if @traveler.save
+  #     flash[:notice] = "Profile created successfully"
+  #     redirect_to @traveler
+  #   else
+  #     render :new, status: :unprocessable_entity
+  #   end
+  # end
 
   def show
     @traveler = Traveler.find(params[:id])
