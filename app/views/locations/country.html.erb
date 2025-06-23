@@ -1,0 +1,8 @@
+<h2 class="text-2xl font-semibold mb-4"><%= @location.name %> – Provinces</h2>
+<ul class="space-y-2">
+  <% @provinces.each do |province| %>
+    <li>
+      <%= link_to province.name, location_path(province), class: "text-green-600 hover:underline" %>
+    </li>
+  <% end %>
+</ul>

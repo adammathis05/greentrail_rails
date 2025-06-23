@@ -1,4 +1,7 @@
 class Community < ApplicationRecord
+  extend FriendlyId
+  friendly_id :name, use: :slugged
+  
   belongs_to :town
   belongs_to :community_center_site, class_name: "Site", optional: true
 

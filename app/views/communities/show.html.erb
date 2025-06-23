@@ -1,0 +1,32 @@
+<!-- app/views/communities/show.html.erb -->
+
+<h1 class="text-3xl font-bold mb-4"><%= @community.name %></h1>
+
+<nav class="mb-6 flex gap-4 border-b pb-2 text-sm font-medium text-gray-600">
+  <% %w[Explore Eat Stay Events Amenities].each do |category| %>
+    <%= link_to "##{category.downcase}", "##{category.downcase}",
+        class: "hover:text-blue-600 transition" %>
+  <% end %>
+</nav>
+
+<% %w[Explore Eat Stay Events Amenities].each do |category| %>
+  <% providers = @grouped_providers[category] || [] %>
+  <% next if providers.empty? %>
+
+  <section id="<%= category.downcase %>" class="mb-10">
+    <h2 class="text-2xl font-semibold mb-4 text-gray-800"><%= category %></h2>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <% providers.each do |provider| %>
+        <div class="border rounded-lg shadow-sm p-4 bg-white">
+          <h3 class="text-lg font-bold mb-2"><%= provider.name %></h3>
+          <p class="text-sm text-gray-600 mb-2"><%= provider.description %></p>
+          <% if provider.map_link.present? %>
+            <a href="<%= provider.map_link %>" target="_blank"
+              class="text-blue-600 text-sm hover:underline">View on Map</a>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </section>
+<% end %>

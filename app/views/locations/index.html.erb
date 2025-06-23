@@ -1,9 +1,8 @@
-<h1>Locations</h1>
-
-<ul>
-  <% @locations.each do |location| %>
-  <li>
-    <strong><%= location.name %></strong>
-  </li>
-<% end %>
+<h1 class="text-3xl font-bold mb-4">Browse Locations</h1>
+<ul class="space-y-2">
+  <% @countries.each do |country| %>
+    <li>
+      <%= link_to country.name, location_path(country), class: "text-blue-600 hover:underline" %>
+    </li>
+  <% end %>
 </ul>
