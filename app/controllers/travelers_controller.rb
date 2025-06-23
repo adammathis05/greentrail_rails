@@ -31,6 +31,13 @@ class TravelersController < ApplicationController
     end
   end
 
+  def destroy
+    @traveler = Traveler.find(params[:id])
+    @traveler.destroy
+  flash[:notice] = "Traveler account successfully deleted."
+  redirect_to root_path
+  end 
+
   private
 
   def traveler_params

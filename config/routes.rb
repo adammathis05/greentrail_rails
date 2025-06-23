@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   get "travelers/update"
   get "locations" => "locations#index"
 
-  resources :travelers, only: [:new, :create, :show, :edit, :update]
+  resources :travelers, only: [:new, :create, :show, :edit, :update, :destroy]
 
   resources :communities, only: [:index, :show]
 
