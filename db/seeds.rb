@@ -27,10 +27,17 @@ class Seed
       community.save!
       site = create(:site, town: town, community: community)
 
+    categories = ["Explore", "Eat", "Stay", "Events", "Amenities"]
     3.times do
-      provider = create(:provider, site: site, community: community)
-      tag = create(:tag)
-      create(:provider_tag, provider: provider, tag: tag)
+      Provider.create!(
+      name: Faker::Company.name,
+      description: Faker::Lorem.sentence,
+      category: categories.sample,
+      site: Site.order("RANDOM()").first,
+      community: Community.order("RANDOM()").first,
+      map_link: Faker::Internet.url,
+      service: %w[Stay Eat Explore Events Amenities].sample
+    )
     end
 
     event = create(:event, community: community, site: site)
