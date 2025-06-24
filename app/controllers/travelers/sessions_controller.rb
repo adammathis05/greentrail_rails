@@ -1,27 +1,23 @@
 # frozen_string_literal: true
 
 class Travelers::SessionsController < Devise::SessionsController
-  # before_action :configure_sign_in_params, only: [:create]
+  before_action :store_redirect_path, only: [:new]
 
-  # GET /resource/sign_in
-  # def new
-  #   super
-  # end
+  def create
+    super
+  end
 
-  # POST /resource/sign_in
-  # def create
-  #   super
-  # end
+  protected
 
-  # DELETE /resource/sign_out
-  # def destroy
-  #   super
-  # end
+  def after_sign_in_path_for(resource)
+    stored_location_for(resource) || session.delete(:redirect_to) || root_path
+  end
 
-  # protected
+  private
 
-  # If you have extra params to permit, append them to the sanitizer.
-  # def configure_sign_in_params
-  #   devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])
-  # end
+  def store_redirect_path
+    if params[:redirect_to].present?
+      session[:redirect_to] = params[:redirect_to]
+    end
+  end
 end

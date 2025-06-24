@@ -3,7 +3,9 @@ class ApplicationController < ActionController::Base
   allow_browser versions: :modern
 
   before_action :configure_permitted_parameters, if: :devise_controller?
+  before_action :store_redirect_path, if: -> { devise_controller? && params[:redirect_to].present? }
   before_action :authenticate_traveler!, unless: :public_page?
+
 
   helper_method :current_traveler
 
@@ -14,27 +16,27 @@ class ApplicationController < ActionController::Base
   
   protected
 
-  def after_sign_in_path_for(resource)
-    traveler_path(resource) # or customize based on role later
-  end
-
-  # Devise: redirect after sign out
-  def after_sign_out_path_for(_resource_or_scope)
-    root_path
-  end
-
-  def redirect_if_authenticated
-    if traveler_signed_in?
-      redirect_to traveler_path(current_traveler), notice: "You're already signed in."
-    end
-  end
-
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [:first, :last])
     devise_parameter_sanitizer.permit(:account_update, keys: [:first, :last])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:redirect_to])
   end
 
-  private
+  def store_redirect_path
+    store_location_for(:traveler, params[:redirect_to])
+  end
+
+  def after_sign_up_path_for(resource)
+    stored_location_for(resource) || root_path
+  end
+
+  def after_sign_in_path_for(resource)
+    stored_location_for(resource) || locations_path
+  end
+
+  def after_sign_out_path_for(_resource_or_scope)
+    root_path
+  end
 
   def public_page?
     devise_controller? || 
