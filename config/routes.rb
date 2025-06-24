@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get "communities/index"
+  get "communities/show"
   devise_for :travelers
   get "pages/home"
   get "pages/about"
@@ -19,8 +21,9 @@ Rails.application.routes.draw do
 }
 
   resources :travelers, only: [:new, :create, :show, :edit, :update, :destroy]
-
   resources :communities, only: [:index, :show]
+  resources :locations, only: [:index, :show]
+
 
   root "pages#home"
 

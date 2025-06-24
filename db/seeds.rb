@@ -24,6 +24,7 @@ class Seed
       town = create(:town, province: province)
 
       community = create(:community, town: town)
+      community.save!
       site = create(:site, town: town, community: community)
 
     3.times do
@@ -36,8 +37,13 @@ class Seed
     create(:event_series, event: event, community: community, site: site)
   end
 
-      5.times do
-      create(:traveler)
+    5.times do
+      create(:traveler,
+      email: Faker::Internet.unique.email,
+      password: "password123",
+      password_confirmation: "password123",
+      role: :traveler
+    )
     end
   end
 end

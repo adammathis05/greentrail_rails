@@ -1,0 +1,14 @@
+<h1 class="text-2xl font-bold mb-6"><%= @location.name %></h1>
+
+<% if @children.present? %>
+  <h2 class="text-lg font-semibold mb-2"><%= @child_type %></h2>
+  <ul class="space-y-2">
+    <% @children.each do |child| %>
+      <li>
+        <%= link_to child.name, location_path(child), class: "text-blue-600 hover:underline" %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p class="text-gray-600 italic">No further subdivisions found for this location.</p>
+<% end %>

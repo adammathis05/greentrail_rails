@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :community do
-    community_name { Faker::Team.name }
+    community_name { Faker::Address.community }
     description { Faker::Lorem.paragraph }
-    town
+    association :town
   end
 end
