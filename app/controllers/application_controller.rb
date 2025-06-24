@@ -39,7 +39,8 @@ class ApplicationController < ActionController::Base
   def public_page?
     devise_controller? || 
     (controller_name == "pages" && action_name == "home") ||
-    (controller_name == "communities" && %w[index show].include?(action_name))
+    (controller_name == "communities" && %w[index show].include?(action_name)) ||
+    (controller_name == "locations" && %w[index show].include?(action_name))
   end
 
   def admin_only!

@@ -1,45 +1,61 @@
-<h1 class="text-3xl font-bold mb-4"><%= @community.name %></h1>
-
-<% all_categories = ["Explore", "Eat", "Stay", "Events", "Amenities"] %>
-
-<!-- Category Tabs -->
-
-<nav class="mb-6 flex gap-4 border-b pb-2 text-sm font-medium text-gray-600">
-  <% all_categories.each_with_index do |category, index| %>
-  <a href="javascript:void(0);"
-     data-category="<%= category.downcase %>"
-     class="category-tab px-4 py-2 rounded transition <%= index == 0 ? 'bg-white text-blue-700 border-b-2 border-blue-700' : 'hover:text-blue-600' %>">
-    <%= category.titleize %>
-  </a>
-<% end %>
-</nav>
-
-<!-- Category Sections -->
-<% all_categories.each_with_index do |category, index| %>
-  <% providers = @grouped_providers[category] || [] %>
-  <section
-    id="<%= category.downcase %>-section"
-    class="<%= index == 0 ? '' : 'hidden' %> category-section mb-10">
-    
-    <h2 class="text-2xl font-semibold mb-4 text-gray-800"><%= category %></h2>
-
-    <% if providers.any? %>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <% providers.each do |provider| %>
-          <div class="border rounded-lg shadow-sm p-4 bg-white">
-            <h3 class="text-lg font-bold mb-2"><%= provider.name %></h3>
-            <p class="text-sm text-gray-600 mb-2"><%= provider.description %></p>
-            <% if provider.map_link.present? %>
-              <a href="<%= provider.map_link %>" target="_blank"
-                 class="text-blue-600 text-sm hover:underline">View on Map</a>
-            <% end %>
-          </div>
-        <% end %>
-      </div>
-    <% else %>
-      <p class="text-sm text-gray-500">No providers listed under <%= category %>.</p>
+<% if traveler_signed_in? %>
+  <!-- Provider Category Tabs -->
+  <nav class="mb-6 flex gap-4 border-b pb-2 text-sm font-medium text-gray-600">
+    <% @all_categories.each_with_index do |category, index| %>
+      <a href="javascript:void(0);"
+         data-category="<%= category.downcase %>"
+         class="category-tab px-4 py-2 rounded transition <%= index == 0 ? 'bg-white text-blue-700 border-b-2 border-blue-700' : 'hover:text-blue-600' %>">
+        <%= category.titleize %>
+      </a>
     <% end %>
-  </section>
+  </nav>
+
+  <!-- Provider Category Sections -->
+  <% @all_categories.each_with_index do |category, index| %>
+    <% providers = @grouped_providers[category] || [] %>
+    <section id="<%= category.downcase %>-section"
+             class="<%= index == 0 ? '' : 'hidden' %> category-section mb-10">
+      <h2 class="text-2xl font-semibold mb-4 text-gray-800"><%= category %></h2>
+      <% if providers.any? %>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <% providers.each do |provider| %>
+            <div class="border rounded-lg shadow-sm p-4 bg-white">
+              <h3 class="text-lg font-bold mb-2"><%= provider.name %></h3>
+              <p class="text-sm text-gray-600 mb-2"><%= provider.description %></p>
+              <% if provider.map_link.present? %>
+                <a href="<%= provider.map_link %>" target="_blank"
+                   class="text-blue-600 text-sm hover:underline">View on Map</a>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <p class="text-sm text-gray-500">No providers listed under <%= category %>.</p>
+      <% end %>
+    </section>
+  <% end %>
+<% else %>
+  <!-- Guest View Button -->
+  <div class="text-center mt-8">
+    <button id="login-prompt-button"
+            class="bg-blue-600 text-white px-6 py-3 rounded hover:bg-blue-700 transition">
+      Access Community Details
+    </button>
+  </div>
+
+  <!-- Modal -->
+  <div id="login-modal" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center hidden z-50">
+    <div class="bg-white rounded-lg p-6 shadow-lg max-w-md w-full">
+      <h2 class="text-xl font-bold mb-4 text-gray-800">Sign Up Required</h2>
+      <p class="text-gray-600 mb-6">Please create an account or sign in to access community provider details.</p>
+      <div class="flex justify-end gap-4">
+        <button id="close-modal"
+                class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">Cancel</button>
+        <%= link_to "Sign Up", new_traveler_registration_path,
+              class: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition" %>
+      </div>
+    </div>
+  </div>
 <% end %>
 
 <script>
@@ -65,5 +81,28 @@
         });
       });
     });
+  });
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const loginButton = document.getElementById("login-prompt-button");
+    const loginModal = document.getElementById("login-modal");
+    const closeModal = document.getElementById("close-modal");
+
+    if (loginButton && loginModal && closeModal) {
+      loginButton.addEventListener("click", () => {
+        loginModal.classList.remove("hidden");
+      });
+
+      closeModal.addEventListener("click", () => {
+        loginModal.classList.add("hidden");
+      });
+
+      // Optional: close modal if clicking outside the box
+      loginModal.addEventListener("click", (e) => {
+        if (e.target === loginModal) loginModal.classList.add("hidden");
+      });
+    }
   });
 </script>
