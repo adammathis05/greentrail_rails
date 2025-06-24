@@ -7,12 +7,14 @@
     </p>
     <%= link_to "Go to Dashboard", traveler_path(current_traveler),
                 class: "inline-block bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition" %>
+    <%= link_to "Browse Greentrail Locations", locations_path,
+                class: "inline-block bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 transition" %>
   <% else %>
     <div class="mt-6 flex flex-col sm:flex-row gap-4 justify-center">
       <%= link_to "Sign Up", new_traveler_registration_path,
             class: "bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 transition" %>
-      <%= link_to "Browse Communities", communities_path,
-                  class: "border border-blue-600 text-blue-600 px-6 py-2 rounded hover:bg-blue-50 transition" %>
+      <%= link_to "Browse Greentrail Communities", locations_path,
+                class: "inline-block bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 transition" %>
     </div>
   <% end %>
 </div>

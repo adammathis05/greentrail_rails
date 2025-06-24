@@ -1,32 +1,69 @@
-<!-- app/views/communities/show.html.erb -->
-
 <h1 class="text-3xl font-bold mb-4"><%= @community.name %></h1>
 
+<% all_categories = ["Explore", "Eat", "Stay", "Events", "Amenities"] %>
+
+<!-- Category Tabs -->
+
 <nav class="mb-6 flex gap-4 border-b pb-2 text-sm font-medium text-gray-600">
-  <% %w[Explore Eat Stay Events Amenities].each do |category| %>
-    <%= link_to "##{category.downcase}", "##{category.downcase}",
-        class: "hover:text-blue-600 transition" %>
-  <% end %>
+  <% all_categories.each_with_index do |category, index| %>
+  <a href="javascript:void(0);"
+     data-category="<%= category.downcase %>"
+     class="category-tab px-4 py-2 rounded transition <%= index == 0 ? 'bg-white text-blue-700 border-b-2 border-blue-700' : 'hover:text-blue-600' %>">
+    <%= category.titleize %>
+  </a>
+<% end %>
 </nav>
 
-<% %w[Explore Eat Stay Events Amenities].each do |category| %>
+<!-- Category Sections -->
+<% all_categories.each_with_index do |category, index| %>
   <% providers = @grouped_providers[category] || [] %>
-  <% next if providers.empty? %>
-
-  <section id="<%= category.downcase %>" class="mb-10">
+  <section
+    id="<%= category.downcase %>-section"
+    class="<%= index == 0 ? '' : 'hidden' %> category-section mb-10">
+    
     <h2 class="text-2xl font-semibold mb-4 text-gray-800"><%= category %></h2>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      <% providers.each do |provider| %>
-        <div class="border rounded-lg shadow-sm p-4 bg-white">
-          <h3 class="text-lg font-bold mb-2"><%= provider.name %></h3>
-          <p class="text-sm text-gray-600 mb-2"><%= provider.description %></p>
-          <% if provider.map_link.present? %>
-            <a href="<%= provider.map_link %>" target="_blank"
-              class="text-blue-600 text-sm hover:underline">View on Map</a>
-          <% end %>
-        </div>
-      <% end %>
-    </div>
+    <% if providers.any? %>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <% providers.each do |provider| %>
+          <div class="border rounded-lg shadow-sm p-4 bg-white">
+            <h3 class="text-lg font-bold mb-2"><%= provider.name %></h3>
+            <p class="text-sm text-gray-600 mb-2"><%= provider.description %></p>
+            <% if provider.map_link.present? %>
+              <a href="<%= provider.map_link %>" target="_blank"
+                 class="text-blue-600 text-sm hover:underline">View on Map</a>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="text-sm text-gray-500">No providers listed under <%= category %>.</p>
+    <% end %>
   </section>
 <% end %>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const tabs = document.querySelectorAll(".category-tab");
+    const sections = document.querySelectorAll(".category-section");
+
+    tabs.forEach(tab => {
+      tab.addEventListener("click", () => {
+        const selected = tab.dataset.category;
+
+        // Toggle active tab styling
+        tabs.forEach(t => t.classList.remove("bg-white", "text-blue-700", "border-b-2", "border-blue-700"));
+        tab.classList.add("bg-white", "text-blue-700", "border-b-2", "border-blue-700");
+
+        // Show only the selected section
+        sections.forEach(section => {
+          if (section.id === `${selected}-section`) {
+            section.classList.remove("hidden");
+          } else {
+            section.classList.add("hidden");
+          }
+        });
+      });
+    });
+  });
+</script>

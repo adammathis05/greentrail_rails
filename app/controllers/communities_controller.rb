@@ -3,13 +3,13 @@ class CommunitiesController < ApplicationController
   before_action :set_community, only: [:show]
 
   def show
-    @providers = @community.providers.includes(:site, :tags)
-    @grouped_providers = @providers.group_by(&:category)
+    @community = Community.friendly.find(params[:id])
+    @grouped_providers = current_traveler ? @community.providers.includes(:site, :tags).group_by(&:category) : {}
   end
 
   private
 
   def set_community
-  @community = Community.friendly.find(params[:id])
-end
+    @community = Community.friendly.find(params[:id])
+  end
 end

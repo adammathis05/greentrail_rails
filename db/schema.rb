@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_06_23_212621) do
+ActiveRecord::Schema[7.2].define(version: 2025_06_24_180622) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -98,6 +98,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_23_212621) do
     t.string "service"
     t.text "description"
     t.string "category"
+    t.string "map_link"
     t.index ["community_id"], name: "index_providers_on_community_id"
     t.index ["site_id"], name: "index_providers_on_site_id"
   end
