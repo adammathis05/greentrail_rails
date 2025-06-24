@@ -30,4 +30,9 @@ class LocationsController < ApplicationController
     end
   end
 
+  private
+
+  def set_location
+    @location = Location.find(params[:id])
+  end
 end

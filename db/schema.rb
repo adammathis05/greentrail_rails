@@ -141,7 +141,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_23_212621) do
     t.integer "failed_attempts", default: 0, null: false
     t.string "unlock_token"
     t.datetime "locked_at"
-    t.string "role"
+    t.string "role", default: "traveler", null: false
     t.index ["confirmation_token"], name: "index_travelers_on_confirmation_token", unique: true
     t.index ["email"], name: "index_travelers_on_email", unique: true
     t.index ["reset_password_token"], name: "index_travelers_on_reset_password_token", unique: true
