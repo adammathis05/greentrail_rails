@@ -7,6 +7,15 @@ class Provider < ApplicationRecord
 
   alias_attribute :provider_name, :name
 
+  enum category: {
+    explore: "Explore",
+    eat: "Eat",
+    stay: "Stay",
+    events: "Events",
+    amenities: "Amenities"
+  }
+
+  validates :description, :category, presence: true
   validates :provider_name, presence: true
   validates :service, presence: true
 end
