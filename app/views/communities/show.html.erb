@@ -19,11 +19,13 @@
              class="<%= index == 0 ? '' : 'hidden' %> category-section mb-10">
       <h2 class="text-2xl font-semibold mb-4 text-gray-800"><%= category %></h2>
       <% if providers.any? %>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="px-4 md:px-6 lg:px-12">
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
           <% providers.each do |provider| %>
-            <!-- Provider Card -->
+          <%= render partial: "providers/provider_card", locals: { provider: provider } %>
           <% end %>
         </div>
+      </div>
       <% else %>
         <p class="text-sm text-gray-500">No providers listed under <%= category %>.</p>
       <% end %>

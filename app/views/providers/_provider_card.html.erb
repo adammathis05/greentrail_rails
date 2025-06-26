@@ -1,0 +1,14 @@
+<div class="bg-white rounded-lg shadow p-4 border border-gray-200 max-w-sm w-full">
+  <h3 class="text-xl font-bold text-gray-800 mb-2"><%= provider.name %></h3>
+  <p class="text-sm text-gray-600 mb-2"><%= provider.description %></p>
+
+  <% if provider.map_link.present? %>
+    <a href="<%= provider.map_link %>" target="_blank" class="text-blue-600 hover:underline text-sm">
+      View on Google Maps
+    </a>
+  <% end %>
+
+  <% if provider.site.present? %>
+    <p class="mt-2 text-xs text-gray-500">Site: <%= provider.site.name %></p>
+  <% end %>
+</div>
