@@ -8,6 +8,7 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 require 'factory_bot_rails'
+require 'erb'
 
 # Explicitly include FactoryBot methods
 class Seed
@@ -23,22 +24,36 @@ class Seed
       province = create(:province, country: country)
       town = create(:town, province: province)
 
-      community = create(:community, town: town)
+      hero_images = [
+        "communities/sample-1.jpg",
+        "communities/sample-2.jpg",
+        "communities/sample-3.jpg"
+      ]
+
+      community = create(:community, town: town, hero_image_url: hero_images.sample)
       community.save!
       site = create(:site, town: town, community: community)
 
-    categories = ["Explore", "Eat", "Stay", "Events", "Amenities"]
-    3.times do
-      Provider.create!(
-      name: Faker::Company.name,
-      description: Faker::Lorem.sentence,
-      category: categories.sample,
-      site: Site.order("RANDOM()").first,
-      community: Community.order("RANDOM()").first,
-      map_link: Faker::Internet.url,
-      service: %w[Stay Eat Explore Events Amenities].sample
-    )
+    community = Community.first || Community.create!(name: "Sample Community", town: Town.first)
+
+    provider_categories = Provider.categories.keys
+
+    provider_categories.each do |category|
+      3.times do |i|
+        Provider.create!(
+          name: "#{category.titleize} Place #{i + 1}",
+          description: "A great place to #{category.downcase}.",
+          service: "General Service Info",
+          category: category,
+          map_link: "https://maps.google.com/?q=#{ERB::Util.url_encode("Sample #{category.titleize} Place #{i + 1}")}",
+          community: community,
+          site: site
+        )
+      end
     end
+
+    puts "Seeded #{provider_categories.size * 3} providers for #{community.name}"
+      
 
     event = create(:event, community: community, site: site)
     create(:event_series, event: event, community: community, site: site)

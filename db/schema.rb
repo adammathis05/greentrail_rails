@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_06_24_180622) do
+ActiveRecord::Schema[7.2].define(version: 2025_06_26_210104) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -22,6 +22,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_24_180622) do
     t.text "description", null: false
     t.bigint "community_center_site_id"
     t.string "slug"
+    t.string "hero_image_url"
     t.index ["community_center_site_id"], name: "index_communities_on_community_center_site_id"
     t.index ["slug"], name: "index_communities_on_slug", unique: true
     t.index ["town_id"], name: "index_communities_on_town_id"
@@ -143,6 +144,10 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_24_180622) do
     t.string "unlock_token"
     t.datetime "locked_at"
     t.string "role", default: "traveler", null: false
+    t.date "birthdate"
+    t.string "home_city"
+    t.string "home_country"
+    t.string "profile_image_url"
     t.index ["confirmation_token"], name: "index_travelers_on_confirmation_token", unique: true
     t.index ["email"], name: "index_travelers_on_email", unique: true
     t.index ["reset_password_token"], name: "index_travelers_on_reset_password_token", unique: true

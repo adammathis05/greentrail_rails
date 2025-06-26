@@ -1,29 +1,56 @@
-<h1 class="text-3xl font-bold mb-6"><%= @community.name %></h1>
+<div class="w-full flex justify-center mt-6 mb-8">
+  <div class="relative w-11/12 md:w-4/5 aspect-video md:h-[22rem] lg:h-[26rem] rounded-lg shadow-lg overflow-hidden">
+    <%= image_tag(@community.hero_image_url.presence || "communities/default.jpg", class: "object-cover w-full h-full") %>
+    <div class="absolute top-4 left-4 bg-white/70 px-4 py-2 rounded">
+      <h1 class="text-2xl font-bold text-gray-800"><%= @community.name %></h1>
+    </div>
+  </div>
+</div>
 
 <% if traveler_signed_in? %>
   <!-- Provider Category Tabs -->
-  <nav class="mb-6 flex gap-4 border-b pb-2 text-sm font-medium text-gray-600">
+  <nav class="mb-8 flex justify-center">
+  <div class="inline-flex border border-gray-300 rounded-lg overflow-hidden bg-white shadow-sm text-base">
     <% @all_categories.each_with_index do |category, index| %>
       <a href="javascript:void(0);"
          data-category="<%= category.downcase %>"
-         class="category-tab px-4 py-2 rounded transition <%= index == 0 ? 'bg-white text-blue-700 border-b-2 border-blue-700' : 'hover:text-blue-600' %>">
+         class="category-tab px-5 py-2 transition-all font-medium
+                <%= index == 0 ? 'bg-blue-600 text-white' : 'text-black hover:bg-gray-100' %>">
         <%= category.titleize %>
       </a>
     <% end %>
-  </nav>
+  </div>
+</nav>
 
   <!-- Provider Sections (same structure as before) -->
   <% @all_categories.each_with_index do |category, index| %>
     <% providers = @grouped_providers[category] || [] %>
     <section id="<%= category.downcase %>-section"
              class="<%= index == 0 ? '' : 'hidden' %> category-section mb-10">
-      <h2 class="text-2xl font-semibold mb-4 text-gray-800"><%= category %></h2>
+      <% title =
+        case category.downcase
+        when "explore"
+          "Explore #{@community.name}!"
+        when "stay"
+          "Places to Stay"
+        when "eat"
+          "Places to Eat"
+        when "events"
+          "Events in #{@community.name}"
+        when "amenities"
+          "Local Service Providers"
+        end
+      %>
+    <h2 class="text-2xl font-semibold mb-4 text-gray-800 text-center"><%= title %></h2>
+
       <% if providers.any? %>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="px-4 md:px-6 lg:px-12">
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
           <% providers.each do |provider| %>
-            <!-- Provider Card -->
+          <%= render partial: "providers/provider_card", locals: { provider: provider } %>
           <% end %>
         </div>
+      </div>
       <% else %>
         <p class="text-sm text-gray-500">No providers listed under <%= category %>.</p>
       <% end %>
@@ -81,17 +108,18 @@
       tab.addEventListener("click", () => {
         const selected = tab.dataset.category;
 
-        // Toggle active tab styling
-        tabs.forEach(t => t.classList.remove("bg-white", "text-blue-700", "border-b-2", "border-blue-700"));
-        tab.classList.add("bg-white", "text-blue-700", "border-b-2", "border-blue-700");
+        // Update tab styles
+        tabs.forEach(t => {
+          t.classList.remove("bg-blue-600", "text-white");
+          t.classList.add("text-black", "hover:bg-gray-100");
+        });
+
+        tab.classList.remove("text-black", "hover:bg-gray-100");
+        tab.classList.add("bg-blue-600", "text-white");
 
         // Show only the selected section
         sections.forEach(section => {
-          if (section.id === `${selected}-section`) {
-            section.classList.remove("hidden");
-          } else {
-            section.classList.add("hidden");
-          }
+          section.classList.toggle("hidden", section.id !== `${selected}-section`);
         });
       });
     });
