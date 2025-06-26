@@ -3,7 +3,7 @@ class CommunitiesController < ApplicationController
   before_action :set_community, only: [:show]
 
   def show
-    @all_categories = Provider.categories.values.uniq
+    @all_categories = ["Explore", "Stay", "Eat", "Events", "Amenities"]
     @grouped_providers = @community.providers.includes(:site, :tags).group_by { |p| p.category.titleize }
   end
 

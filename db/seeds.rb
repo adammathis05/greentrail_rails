@@ -24,7 +24,13 @@ class Seed
       province = create(:province, country: country)
       town = create(:town, province: province)
 
-      community = create(:community, town: town)
+      hero_images = [
+        "communities/sample-1.jpg",
+        "communities/sample-2.jpg",
+        "communities/sample-3.jpg"
+      ]
+
+      community = create(:community, town: town, hero_image_url: hero_images.sample)
       community.save!
       site = create(:site, town: town, community: community)
 
