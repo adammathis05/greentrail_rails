@@ -8,6 +8,8 @@ class Traveler < ApplicationRecord
   enum role: { traveler: "traveler", admin: "admin" }
   before_validation :assign_default_role, on: :create
 
+  has_one_attached :profile_picture
+
   # Validations
   validates :role, presence: true
   validates :first, :last, :email, presence: true
