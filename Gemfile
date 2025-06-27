@@ -21,7 +21,7 @@ gem "jbuilder"
 
 gem 'devise' # Use devise for user login/authentication/etc.
 
-gem 'friendly_id', '~> 5.4.0'
+gem 'friendly_id', '~> 5.5.1'
 
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
