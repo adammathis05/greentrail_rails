@@ -1,12 +1,47 @@
-<h2 class="text-2xl font-semibold mb-4">Welcome, <%= @traveler.full_name %>!</h2>
+<div class="min-h-screen bg-gray-50 py-10">
+  <div class="max-w-4xl mx-auto bg-white p-8 rounded-xl shadow-lg">
+    
+    <!-- Traveler Name -->
+    <h2 class="text-4xl font-bold text-center mb-6">
+      Welcome, <%= @traveler.first %>!
+    </h2>
 
-<p>Email: <%= @traveler.email %></p>
+    <p class="text-sm text-center text-gray-500 mb-6">
+      Greentrail traveler since <%= @traveler.created_at.year %>
+    </p>
 
-<%= link_to "Edit Profile", edit_traveler_path(@traveler), class: "text-blue-600 underline" %>
+    <!-- Profile Image + Info -->
+    <div class="flex flex-col items-center gap-6 mb-6">
+      <% if @traveler.profile_picture.attached? %>
+        <div class="w-52 h-52 rounded-full p-1 bg-gradient-to-tr from-red-900 via-white to-blue-900 shadow-lg">
+          <%= image_tag @traveler.profile_picture.variant(resize_to_fill: [200, 200]), class: "w-full h-full rounded-full object-cover" %>
+        </div>
+      <% else %>
+        <div class="w-32 h-32 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 shadow">
+          <span class="text-xl font-semibold">No Photo</span>
+        </div>
+      <% end %>
 
-<%= link_to 'Delete Account',
-            traveler_path(@traveler),
-            method: :delete,
-            data: { confirm: "Are you sure you want to delete your account?" },
-            class: "bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition ml-4" %>
+      <div class="text-center space-y-2">
+        <p class="text-lg text-gray-800"><%= @traveler.email %></p>
+        <p class="text-lg text-gray-800">
+          <%= @traveler.home_city %>, <%= @traveler.home_country %>
+        </p>
+        <p class="text-lg text-gray-800">Birthdate: <%= @traveler.birthdate&.strftime("%B %d, %Y") || "Not provided" %></p>
+      </div>
+    </div>
 
+    <!-- Action Buttons -->
+    <div class="flex flex-col sm:flex-row justify-center gap-4 w-full sm:w-auto">
+      <%= link_to "Edit Profile",
+                  edit_traveler_path(@traveler),
+                  class: "bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition text-sm sm:text-base text-center" %>
+
+      <%= link_to "Delete Account",
+                  traveler_path(@traveler),
+                  method: :delete,
+                  data: { confirm: "Are you sure you want to delete your account?" },
+                  class: "bg-red-600 text-white px-6 py-2 rounded-full hover:bg-red-700 transition text-sm sm:text-base text-center" %>
+    </div>
+  </div>
+</div>

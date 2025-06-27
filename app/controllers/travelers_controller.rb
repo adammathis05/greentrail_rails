@@ -7,29 +7,34 @@ class TravelersController < ApplicationController
   end
 
   def edit
-    @traveler = Traveler.find(params[:id])
+    @traveler = current_traveler
   end
 
   def update
-    @traveler = Traveler.find(params[:id])
+    @traveler = current_traveler
     if @traveler.update(traveler_params)
-      flash[:notice] = "Profile updated successfully"
-      redirect_to @traveler
+      redirect_to traveler_path(@traveler), notice: "Profile updated successfully."
     else
       render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
-    @traveler = Traveler.find(params[:id])
-    @traveler.destroy
-  flash[:notice] = "Traveler account successfully deleted."
-  redirect_to root_path
-  end 
+    current_traveler.destroy
+    redirect_to root_path, notice: "Account deleted successfully."
+  end
 
   private
 
   def traveler_params
-    params.require(:traveler).permit(:first, :last, :email)
+    params.require(:traveler).permit(
+      :first,
+      :last,
+      :email,
+      :birthdate,
+      :home_city,
+      :home_country,
+      :profile_picture
+    )
   end
 end

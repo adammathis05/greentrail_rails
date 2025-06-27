@@ -25,6 +25,10 @@ Rails.application.routes.draw do
   resources :locations, only: [:index, :show]
 
 
+  authenticated :traveler do
+    get 'dashboard', to: 'dashboards#show', as: :traveler_dashboard
+  end
+
   root "pages#home"
 
 end
