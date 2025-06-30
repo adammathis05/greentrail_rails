@@ -1,0 +1,13 @@
+<div class="bg-white rounded-xl shadow-md overflow-hidden transition hover:shadow-lg hover:scale-[1.02] duration-200">
+    <div class="h-48 overflow-hidden rounded-md shadow">
+        <%= image_tag community_image_url(community), class: "w-full h-full object-cover" %>
+    </div>
+  <div class="p-4">
+    <h3 class="text-lg font-bold mb-1 text-gray-800"><%= community.name %>, a town in <%= community.town.province.country.name %></h3>
+    <p class="text-sm text-gray-600 mb-3">
+      <%= truncate(community.description.to_s, length: 100) %>
+    </p>
+    <%= link_to "View Community", community_path(community),
+      class: "inline-block bg-blue-600 text-white text-sm px-4 py-2 rounded hover:bg-blue-700 transition" %>
+  </div>
+</div>

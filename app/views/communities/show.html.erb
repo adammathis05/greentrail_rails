@@ -7,6 +7,16 @@
   </div>
 </div>
 
+<% if current_traveler && current_traveler.saved_community_records.exists?(@community.id) %>
+  <%= button_to "Remove from Dashboard", saved_community_path(community_id: @community.id),
+      method: :delete,
+      class: "bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition" %>
+<% elsif current_traveler %>
+  <%= button_to "Add to Dashboard", saved_communities_path(community_id: @community.id),
+      method: :post,
+      class: "bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition" %>
+<% end %>
+
 <% if traveler_signed_in? %>
   <!-- Provider Category Tabs -->
   <nav class="mb-8 flex justify-center">

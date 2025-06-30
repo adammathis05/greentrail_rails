@@ -1,0 +1,46 @@
+<div class="bg-gray-50 min-h-screen py-10 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-7xl mx-auto space-y-8">
+    
+    <!-- Welcome message -->
+    <div>
+      <h1 class="text-3xl font-bold text-gray-800 mb-1">Welcome back, <%= current_traveler.first %>!</h1>
+      <p class="text-sm text-gray-600">Explore your Greentrail journey below.</p>
+    </div>
+
+    <!-- Saved Communities -->
+    <div class="bg-white p-6 rounded-lg shadow-md">
+      <h2 class="text-xl font-semibold mb-4">Your Saved Communities</h2>
+      <% if current_traveler.saved_community_records.any %>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <% current_traveler.saved_community_records.each do |community| %>
+            <div class="border rounded p-4 bg-gray-100 hover:bg-gray-200 transition">
+              <h3 class="font-semibold text-lg"><%= link_to community.name, community_path(community), class: "text-indigo-700 hover:underline" %></h3>
+              <p class="text-sm text-gray-600"><%= community.town.name %>, <%= community.town.province.name %></p>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <p class="text-gray-500">You haven’t saved any communities yet.</p>
+      <% end %>
+    </div>
+
+    <!-- Explore New Destinations -->
+    <div class="bg-white p-6 rounded-lg shadow-md">
+      <h2 class="text-xl font-semibold mb-4">Explore New Destinations</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <% Community.limit(6).each do |community| %>
+          <div class="border rounded p-4 bg-white hover:bg-gray-100 transition">
+            <h3 class="font-semibold text-lg"><%= link_to community.name, community_path(community), class: "text-blue-600 hover:underline" %></h3>
+            <p class="text-sm text-gray-500"><%= community.town.name %>, <%= community.town.province.name %></p>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Placeholder for future features -->
+    <div class="bg-white p-6 rounded-lg shadow-inner text-gray-400 italic text-sm">
+      Future features like messages, budgets, and trip planning will appear here.
+    </div>
+
+  </div>
+</div>
