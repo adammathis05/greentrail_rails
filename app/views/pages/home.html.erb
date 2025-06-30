@@ -3,8 +3,7 @@
 
   <% if traveler_signed_in? %>
   <div class="bg-white shadow p-6 rounded mb-8">
-    <h2 class="text-xl font-bold mb-2">Welcome back, <%= current_traveler.first %>!</h2>
-    <p class="mb-4">Check out this featured community:</p>
+    <h2 class="text-xl font-bold mb-2">Check out this featured community:</h2>
     <%= render partial: "communities/mini_card", locals: { community: @featured_community } %>
     <%= link_to "Go to My Dashboard", traveler_dashboard_path, class: "mt-4 inline-block bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition" %>
   </div>
