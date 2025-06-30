@@ -1,0 +1,5 @@
+<div class="border rounded p-4 shadow bg-white">
+  <h3 class="text-lg font-semibold mb-2"><%= community.name %></h3>
+  <p class="text-sm text-gray-600 mb-2"><%= community.description.truncate(100) if community.description.present? %></p>
+  <%= link_to "View", community_path(community), class: "text-blue-600 hover:underline text-sm" %>
+</div>

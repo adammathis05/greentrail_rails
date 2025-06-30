@@ -9,6 +9,8 @@ class Traveler < ApplicationRecord
   before_validation :assign_default_role, on: :create
 
   has_one_attached :profile_picture
+  has_many :saved_communities, dependent: :destroy
+  has_many :saved_community_records, through: :saved_communities, source: :community
 
   # Validations
   validates :role, presence: true

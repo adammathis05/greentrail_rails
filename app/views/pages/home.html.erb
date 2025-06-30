@@ -1,20 +1,19 @@
 <div class="max-w-3xl mx-auto text-center mt-20 px-4">
   <h1 class="text-4xl font-bold text-gray-800 mb-6">Welcome to GreenTrail</h1>
 
-  <% if current_traveler %>
-    <p class="text-lg text-gray-600 mb-4">
-      Welcome back, <strong><%= current_traveler.full_name %></strong>!
-    </p>
-    <%= link_to "Go to Dashboard", traveler_path(current_traveler),
-                class: "inline-block bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition" %>
-    <%= link_to "Browse Greentrail Locations", locations_path,
-                class: "inline-block bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 transition" %>
-  <% else %>
-    <div class="mt-6 flex flex-col sm:flex-row gap-4 justify-center">
-      <%= link_to "Sign Up", new_traveler_registration_path,
-            class: "bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 transition" %>
-      <%= link_to "Browse Greentrail Communities", locations_path,
-                class: "inline-block bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 transition" %>
-    </div>
-  <% end %>
+  <% if traveler_signed_in? %>
+  <div class="bg-white shadow p-6 rounded mb-8">
+    <h2 class="text-xl font-bold mb-2">Welcome back, <%= current_traveler.first %>!</h2>
+    <p class="mb-4">Check out this featured community:</p>
+    <%= render partial: "communities/mini_card", locals: { community: @featured_community } %>
+    <%= link_to "Go to My Dashboard", traveler_dashboard_path, class: "mt-4 inline-block bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition" %>
+  </div>
+<% else %>
+  <div class="bg-white shadow p-6 rounded mb-8 text-center">
+    <h2 class="text-2xl font-bold mb-2">Discover Greentrail</h2>
+    <p class="mb-4 text-gray-600">Join to save communities, track your travels, and more.</p>
+    <%= link_to "Explore Communities", communities_path, class: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition mr-2" %>
+    <%= link_to "Sign Up", new_traveler_registration_path, class: "bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition" %>
+  </div>
+<% end %>
 </div>

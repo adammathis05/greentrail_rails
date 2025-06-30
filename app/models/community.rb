@@ -8,6 +8,8 @@ class Community < ApplicationRecord
   has_many :sites, through: :town
   has_many :providers, dependent: :destroy
   has_many :events, dependent: :destroy
+  has_many :saved_communities, dependent: :destroy
+  has_many :saved_by_travelers, through: :saved_communities, source: :traveler
 
   alias_attribute :community_name, :name
 

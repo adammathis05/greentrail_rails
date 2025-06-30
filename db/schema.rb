@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_06_26_212949) do
+ActiveRecord::Schema[7.2].define(version: 2025_06_27_172246) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -132,6 +132,15 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_26_212949) do
     t.index ["site_id"], name: "index_providers_on_site_id"
   end
 
+  create_table "saved_communities", force: :cascade do |t|
+    t.bigint "traveler_id", null: false
+    t.bigint "community_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["community_id"], name: "index_saved_communities_on_community_id"
+    t.index ["traveler_id"], name: "index_saved_communities_on_traveler_id"
+  end
+
   create_table "sites", force: :cascade do |t|
     t.string "name"
     t.bigint "town_id"
@@ -197,6 +206,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_26_212949) do
   add_foreign_key "provider_tags", "tags"
   add_foreign_key "providers", "communities"
   add_foreign_key "providers", "sites"
+  add_foreign_key "saved_communities", "communities"
+  add_foreign_key "saved_communities", "travelers"
   add_foreign_key "sites", "communities"
   add_foreign_key "sites", "locations", column: "town_id"
 end
