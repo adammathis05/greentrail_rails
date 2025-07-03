@@ -32,11 +32,16 @@ class CommunitiesController < ApplicationController
 
   def search
     query = params[:q].to_s.downcase
+    country_id = params[:country_id]
 
     @communities = Community.joins(town: { province: :country })
                             .where("LOWER(communities.name) LIKE ? OR LOWER(locations.name) LIKE ? OR LOWER(provinces_locations.name) LIKE ? OR LOWER(countries_locations.name) LIKE ?",
                                   "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%")
                             .distinct
+
+    if country_id.present?
+      @communities = @communities.where(countries: { id: country_id })
+    end
 
     respond_to do |format|
       format.turbo_stream do
