@@ -1,12 +1,49 @@
 class CommunitiesController < ApplicationController
   before_action :authenticate_traveler!, unless: :public_page?
   before_action :set_community, only: [:show]
+  skip_before_action :authenticate_traveler!, only: [:search]
 
   def show
     @all_categories = ["Explore", "Stay", "Eat", "Events", "Amenities"]
     @grouped_providers = @community.providers.includes(:site, :tags).group_by { |p| p.category.titleize }
   end
 
+  # def index
+  #   if params[:q].present?
+  #     query = params[:q].downcase
+  #     puts "Search query: #{params[:q]}"
+
+  #     @communities = Community
+  #       .joins(town: { province: :country })
+  #       .where(
+  #         "LOWER(communities.name) LIKE :q OR
+  #         LOWER(locations.name) LIKE :q OR
+  #         LOWER(provinces_locations.name) LIKE :q OR
+  #         LOWER(countries_locations.name) LIKE :q",
+  #         q: "%#{query}%"
+  #       )
+
+  #     puts "@communities count: #{@communities.count}"
+  #   else
+  #     @communities = Community.all
+  #     puts "Showing all communities"
+  #   end
+  # end
+
+  def search
+  query = params[:q].to_s.downcase
+
+  @communities = Community.joins(town: { province: :country })
+                          .where("LOWER(communities.name) LIKE ? OR LOWER(locations.name) LIKE ? OR LOWER(provinces_locations.name) LIKE ? OR LOWER(countries_locations.name) LIKE ?",
+                                 "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%")
+                          .distinct
+
+  respond_to do |format|
+    format.turbo_stream # will render search.turbo_stream.erb by default
+    format.html { redirect_to communities_path(q: query) }
+  end
+end
+  
   private
 
   def set_community

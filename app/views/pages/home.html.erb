@@ -1,18 +1,45 @@
-<div class="max-w-3xl mx-auto text-center mt-20 px-4">
-  <h1 class="text-4xl font-bold text-gray-800 mb-6">Welcome to GreenTrail</h1>
+<div class="bg-gray-100 min-h-screen py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-md p-6 space-y-8">
 
-  <% if traveler_signed_in? %>
-  <div class="bg-white shadow p-6 rounded mb-8">
-    <h2 class="text-xl font-bold mb-2">Check out this featured community:</h2>
-    <%= render partial: "communities/mini_card", locals: { community: @featured_community } %>
-    <%= link_to "Go to My Dashboard", traveler_dashboard_path, class: "mt-4 inline-block bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition" %>
+    <% if traveler_signed_in? %>
+      <h2 class="text-2xl font-bold text-gray-800">Welcome back, <%= current_traveler.first %>!</h2>
+
+      <!-- Featured Community -->
+      <div>
+        <h3 class="text-lg font-semibold text-gray-700 mb-2">Featured Community</h3>
+        <%= render partial: "communities/mini_card", locals: { community: @featured_community } %>
+        <%= link_to "Learn More", community_path(@featured_community), class: "mt-3 inline-block text-blue-600 hover:underline" %>
+      </div>
+
+      <!-- Explore Communities Search -->
+      <div>
+        <h3 class="text-lg font-semibold text-gray-700 mb-2">Explore New Communities</h3>
+        <%= render "shared/community_search" %>
+        
+      </div>
+
+      <div>
+        <%= link_to "Go to My Dashboard", traveler_dashboard_path, class: "inline-block bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 transition" %>
+      </div>
+
+    <% else %>
+      <!-- Guest View -->
+
+      <h2 class="text-2xl font-bold text-gray-800">Welcome to Greentrail</h2>
+      <p class="text-gray-600">Join our community of travelers and discover hidden gems across the globe.</p>
+
+      <!-- Featured Community -->
+      <div>
+        <h3 class="text-lg font-semibold text-gray-700 mb-2">Featured Community</h3>
+        <%= render partial: "communities/mini_card", locals: { community: @featured_community } %>
+      </div>
+
+      <!-- Explore Communities Search -->
+      <div>
+        <h3 class="text-lg font-semibold text-gray-700 mb-2">Explore New Communities</h3>
+        <%= render "shared/community_search" %>
+        
+      </div>
+    <% end %>
   </div>
-<% else %>
-  <div class="bg-white shadow p-6 rounded mb-8 text-center">
-    <h2 class="text-2xl font-bold mb-2">Discover Greentrail</h2>
-    <p class="mb-4 text-gray-600">Join to save communities, track your travels, and more.</p>
-    <%= link_to "Explore Communities", communities_path, class: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition mr-2" %>
-    <%= link_to "Sign Up", new_traveler_registration_path, class: "bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition" %>
-  </div>
-<% end %>
 </div>

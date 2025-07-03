@@ -5,7 +5,7 @@ class Traveler < ApplicationRecord
          :recoverable, :rememberable, :validatable, :confirmable, :lockable
   
 
-  enum role: { traveler: "traveler", admin: "admin" }
+  enum role: [:traveler, :admin]  # ✅ Recommended format
   before_validation :assign_default_role, on: :create
 
   has_one_attached :profile_picture
