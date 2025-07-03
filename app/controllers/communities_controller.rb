@@ -31,18 +31,25 @@ class CommunitiesController < ApplicationController
   # end
 
   def search
-  query = params[:q].to_s.downcase
+    query = params[:q].to_s.downcase
 
-  @communities = Community.joins(town: { province: :country })
-                          .where("LOWER(communities.name) LIKE ? OR LOWER(locations.name) LIKE ? OR LOWER(provinces_locations.name) LIKE ? OR LOWER(countries_locations.name) LIKE ?",
-                                 "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%")
-                          .distinct
+    @communities = Community.joins(town: { province: :country })
+                            .where("LOWER(communities.name) LIKE ? OR LOWER(locations.name) LIKE ? OR LOWER(provinces_locations.name) LIKE ? OR LOWER(countries_locations.name) LIKE ?",
+                                  "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%")
+                            .distinct
 
-  respond_to do |format|
-    format.turbo_stream # will render search.turbo_stream.erb by default
-    format.html { redirect_to communities_path(q: query) }
+    respond_to do |format|
+      format.turbo_stream do
+        if request.referer == root_url
+          render turbo_stream: turbo_stream.replace("search_results", partial: "communities/results", locals: { communities: @communities })
+        else
+          head :ok # Do nothing if not on homepage
+        end
+      end
+
+      format.html { redirect_to communities_path(q: query) }
+    end
   end
-end
   
   private
 
