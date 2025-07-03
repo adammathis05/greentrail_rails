@@ -1,0 +1,3 @@
+<turbo-frame id="search_results" action="replace">
+  <%= render partial: "communities/results", formats: [:html], locals: { communities: @communities || [], searched: false } %>
+</turbo-frame>

@@ -1,0 +1,10 @@
+<%= form_with url: search_communities_path, method: :post, data: { turbo_frame: "search_results" } do |form| %>  
+<div class="relative w-full max-w-xl mx-auto mb-6">
+    <%= form.text_field :q, placeholder: "Search communities...", class: "w-full border px-4 py-2 rounded-full shadow pr-10" %>
+    <button type="submit" class="absolute right-2 top-2 text-gray-500 hover:text-gray-700">🔍</button>
+  </div>
+<% end %>
+
+<turbo-frame id="search_results" action="replace">
+  <%= render partial: "communities/results", formats: [:html], locals: { communities: @communities || [], searched: false } %>
+</turbo-frame>

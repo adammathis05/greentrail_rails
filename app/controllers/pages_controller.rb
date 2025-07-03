@@ -4,6 +4,8 @@ class PagesController < ApplicationController
   def home
     if traveler_signed_in?
       @featured_community = Community.order("RANDOM()").first
+    else
+      @featured_community = Community.order("RANDOM()").first
     end
   end
 

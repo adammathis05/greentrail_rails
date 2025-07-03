@@ -15,6 +15,8 @@ Rails.application.routes.draw do
   get "pages/home"
   get "pages/about"
   get "pages/contact"
+  # get "search_communities", to: "communities#search", as: :search_communities
+  post "search_communities", to: "communities#search", as: :search_communities
 
   authenticated :traveler do
     get 'dashboard', to: 'dashboards#show', as: :traveler_dashboard

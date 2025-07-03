@@ -1,0 +1,9 @@
+<% searched = local_assigns[:searched] || false %>
+
+<% if communities.any? %>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    <%= render partial: "communities/mini_card", collection: communities, as: :community %>
+  </div>
+<% elsif searched %>
+  <p class="text-gray-500 text-center mt-4">No communities found matching your search.</p>
+<% end %>
