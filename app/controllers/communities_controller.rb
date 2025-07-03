@@ -40,11 +40,11 @@ class CommunitiesController < ApplicationController
 
     respond_to do |format|
       format.turbo_stream do
-        if request.referer == root_url
-          render turbo_stream: turbo_stream.replace("search_results", partial: "communities/results", locals: { communities: @communities })
-        else
-          head :ok # Do nothing if not on homepage
-        end
+        render turbo_stream: turbo_stream.replace(
+          "search_results",
+          partial: "communities/results",
+          locals: { communities: @communities, searched: true }
+        )
       end
 
       format.html { redirect_to communities_path(q: query) }
