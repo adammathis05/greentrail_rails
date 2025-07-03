@@ -7,7 +7,7 @@
     <p class="text-sm text-gray-600 mb-3">
       <%= truncate(community.description.to_s, length: 100) %>
     </p>
-    <%= link_to "View Community", community_path(community),
+    <%= link_to "View Community", community_path(community), data: { turbo_frame: "_top" },
       class: "inline-block bg-blue-600 text-white text-sm px-4 py-2 rounded hover:bg-blue-700 transition" %>
   </div>
 </div>
