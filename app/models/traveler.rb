@@ -6,7 +6,7 @@ class Traveler < ApplicationRecord
   
 
   enum role: [:traveler, :admin]  # ✅ Recommended format
-  before_validation :assign_default_role, on: :create
+  before_validation :set_default_role, on: [:create, :update]
 
   has_one_attached :profile_picture
   has_many :saved_communities, dependent: :destroy
@@ -28,7 +28,9 @@ class Traveler < ApplicationRecord
 
   private
 
-  def assign_default_role
+  after_initialize :set_default_role, if: :new_record?
+
+  def set_default_role
     self.role ||= :traveler
   end
 end

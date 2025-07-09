@@ -32,11 +32,26 @@ class CommunitiesController < ApplicationController
 
   def search
     query = params[:q].to_s.downcase
+    country_id = params[:country_id]
+    has_events = params[:has_events] == "1"
+    has_amenities = params[:has_amenities] == "1"
+    view = params[:view] || "grid"
 
-    @communities = Community.joins(town: { province: :country })
-                            .where("LOWER(communities.name) LIKE ? OR LOWER(locations.name) LIKE ? OR LOWER(provinces_locations.name) LIKE ? OR LOWER(countries_locations.name) LIKE ?",
-                                  "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%")
-                            .distinct
+    @communities = Community.joins(town: { province: :country }).distinct
+
+  if query.present?
+    @communities = @communities.where(
+      "LOWER(communities.name) LIKE :q OR LOWER(locations.name) LIKE :q OR LOWER(provinces_locations.name) LIKE :q OR LOWER(countries_locations.name) LIKE :q",
+      q: "%#{query}%"
+    )
+  end
+
+  @communities = @communities.joins(:events).distinct if has_events
+  @communities = @communities.joins(:amenities).distinct if has_amenities
+
+    if country_id.present?
+      @communities = @communities.where(countries: { id: country_id })
+    end
 
     respond_to do |format|
       format.turbo_stream do
