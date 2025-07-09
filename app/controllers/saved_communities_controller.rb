@@ -8,8 +8,8 @@ class SavedCommunitiesController < ApplicationController
   end
 
   def destroy
-    saved = current_traveler.saved_communities.find_by!(community_id: params[:community_id])
+    saved = current_traveler.saved_communities.find(params[:id])
     saved.destroy
-    redirect_back fallback_location: traveler_dashboard_path, notice: "Community removed from your Dashboard"
+    redirect_to traveler_dashboard_path, notice: "Community removed from your Dashboard"
   end
 end
