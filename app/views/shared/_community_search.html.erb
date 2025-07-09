@@ -1,20 +1,41 @@
 <div class="max-w-6xl mx-auto px-4 py-6">
   <div class="bg-white rounded-2xl shadow-md p-6">
     <h3 class="text-lg font-semibold text-gray-800 mb-4">Explore Greentrail Communities</h3>
-      <%= form_with url: search_communities_path, method: :post, data: { turbo_frame: "search_results" }, class: "w-full flex flex-wrap items-center gap-2" do |f| %>
-        <%= f.text_field :q, placeholder: "Search by community or location...", class: "flex-1 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring focus:border-blue-300" %>
+      <%= form_with url: search_communities_path, method: :post, data: { turbo_frame: "search_results" }, class: "space-y-4" do |f| %>
+      <div class="flex flex-col sm:flex-row gap-4">
+        <%= f.text_field :q, placeholder: "Search by city, town, province, or country...", class: "flex-1 px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring focus:ring-green-300 focus:outline-none" %>
+        
+        <%= f.submit "Search", class: "px-6 py-2 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition" %>
+      </div>
 
-        <%= f.select :country_id, Country.order(:name).pluck(:name, :id),
-              include_blank: "All Countries",
-              class: "px-3 py-2 border border-gray-300 rounded-md shadow-sm" %>
+      <!-- Category Filters -->
+      <div class="flex flex-wrap items-center gap-4">
+        <div class="flex items-center gap-2">
+          <%= f.check_box :has_events, {}, "1", "0" %>
+          <label for="has_events" class="text-sm text-gray-700">Has Events</label>
+        </div>
 
-        <%= f.submit "Search", class: "bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition" %>
-      <% end %>
+        <div class="flex items-center gap-2">
+          <%= f.check_box :has_amenities, {}, "1", "0" %>
+          <label for="has_amenities" class="text-sm text-gray-700">Has Amenities</label>
+        </div>
+      </div>
+
+      <!-- View Toggle -->
+      <div class="flex items-center gap-4">
+        <span class="text-sm text-gray-600">View:</span>
+        <%= f.radio_button :view, "grid", checked: true %>
+        <label class="text-sm text-gray-700">Grid</label>
+
+        <%= f.radio_button :view, "list" %>
+        <label class="text-sm text-gray-700">List</label>
+      </div>
+    <% end %>
   </div>
 
   <div class="mt-6">
     <turbo-frame id="search_results" action="replace">
-      <%= render partial: "communities/results", formats: [:html], locals: { communities: @communities || [], searched: false } %>
+      <%= render partial: "communities/results", formats: [:html], locals: { communities: @communities || [], searched: false, view: "grid" } %>
     </turbo-frame>
   </div>
 </div>

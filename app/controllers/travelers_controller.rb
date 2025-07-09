@@ -11,10 +11,12 @@ class TravelersController < ApplicationController
   end
 
   def update
-    @traveler = current_traveler
-    if @traveler.update(traveler_params)
+    @traveler = Traveler.find(params[:id])
+
+    if @traveler.update(traveler_params.merge(role: @traveler.role))
       redirect_to traveler_path(@traveler), notice: "Profile updated successfully."
     else
+      flash.now[:alert] = "Failed to update profile."
       render :edit, status: :unprocessable_entity
     end
   end
