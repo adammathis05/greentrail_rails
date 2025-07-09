@@ -19,7 +19,7 @@ Rails.application.routes.draw do
   post "search_communities", to: "communities#search", as: :search_communities
 
   authenticated :traveler do
-    get 'dashboard', to: 'dashboards#show', as: :traveler_dashboard
+    get 'dashboard', to: 'travelers#dashboard', as: 'traveler_dashboard'
   end
 
   root "pages#home"
