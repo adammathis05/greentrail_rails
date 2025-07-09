@@ -26,6 +26,10 @@ class TravelersController < ApplicationController
     redirect_to root_path, notice: "Account deleted successfully."
   end
 
+  def dashboard
+    @traveler = current_traveler
+  end
+
   private
 
   def traveler_params

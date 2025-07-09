@@ -3,14 +3,14 @@
     
     <!-- Welcome message -->
     <div>
-      <h1 class="text-3xl font-bold text-gray-800 mb-1">Welcome back, <%= current_traveler.first %>!</h1>
-      <p class="text-sm text-gray-600">Explore your Greentrail journey below.</p>
+      <h1 class="text-3xl font-bold text-gray-800 mb-1">Traveler Dashboard</h1>
+      <p class="text-sm text-gray-600">Continue your Greentrail journey.</p>
     </div>
 
     <!-- Saved Communities -->
     <div class="bg-white p-6 rounded-lg shadow-md">
       <h2 class="text-xl font-semibold mb-4">Your Saved Communities</h2>
-      <% if current_traveler.saved_community_records.any %>
+      <% if current_traveler.saved_community_records.any? %>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <% current_traveler.saved_community_records.each do |community| %>
             <div class="border rounded p-4 bg-gray-100 hover:bg-gray-200 transition">
