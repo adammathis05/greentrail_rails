@@ -4,14 +4,13 @@
 
     <div class="flex items-center space-x-4">
       <% if traveler_signed_in? %>
-        
           <%= link_to "Dashboard", traveler_dashboard_path, class: "bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition" %>
           <%= link_to "Profile", traveler_path(current_traveler), class: "text-blue-600 hover:underline" %>
           <%= link_to "Sign Out", destroy_traveler_session_path, method: :delete, class: "text-red-600 hover:underline ml-4" %>
       <% else %>
-        <%= link_to "Sign Up", new_traveler_registration_path, class: "text-green-600 hover:underline" %>
-        <%= link_to "Sign In", new_traveler_session_path, class: "text-blue-600 hover:underline ml-4" %>
-<% end %>
+        <%= link_to "Sign Up", new_traveler_registration_path, class: "bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition" %>
+        <%= link_to "Sign In", new_traveler_session_path, class: "bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition ml-2" %>
+      <% end %>
     </div>
   </div>
 </nav>
