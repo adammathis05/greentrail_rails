@@ -1,16 +1,50 @@
-<nav class="bg-white shadow-sm">
+<nav class="bg-white shadow-sm border-b border-gray-200">
   <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+    <!-- Logo -->
     <%= link_to "GreenTrail", root_path, class: "text-xl font-bold text-gray-800 hover:text-green-600" %>
 
-    <div class="flex items-center space-x-4">
+    <!-- Hamburger / Close Button -->
+    <div class="sm:hidden">
+      <button id="menu-toggle" class="text-gray-700 hover:text-green-600 focus:outline-none">
+        <!-- Hamburger icon -->
+        <svg id="menu-icon" class="w-6 h-6 block" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+        <!-- Close icon -->
+        <svg id="close-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Desktop Nav -->
+    <div class="hidden sm:flex items-center space-x-4">
       <% if traveler_signed_in? %>
-          <%= link_to "Dashboard", traveler_dashboard_path, class: "bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition" %>
-          <%= link_to "Profile", traveler_path(current_traveler), class: "bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition" %>
-          <%= link_to "Sign Out", destroy_traveler_session_path, method: :delete, class: "bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-700 transition" %>
+        <%= link_to "Dashboard", traveler_dashboard_path, class: "bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition" %>
+        <%= link_to "Profile", traveler_path(current_traveler), class: "bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition" %>
+        <%= link_to "Sign Out", destroy_traveler_session_path, method: :delete, class: "bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-700 transition" %>
       <% else %>
         <%= link_to "Sign Up", new_traveler_registration_path, class: "bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition" %>
         <%= link_to "Sign In", new_traveler_session_path, class: "bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition ml-2" %>
       <% end %>
     </div>
   </div>
+
+  <!-- Mobile Menu (Animated) -->
+    <div id="mobile-menu" class="sm:hidden max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
+      <div class="px-4 py-4 space-y-2">
+        <% if traveler_signed_in? %>
+          <%= link_to "Dashboard", traveler_dashboard_path, class: "block bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition" %>
+          <%= link_to "Profile", traveler_path(current_traveler), class: "block bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition" %>
+          <%= link_to "Sign Out", destroy_traveler_session_path, method: :delete, class: "block bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-700 transition" %>
+        <% else %>
+          <%= link_to "Sign Up", new_traveler_registration_path, class: "block bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition" %>
+          <%= link_to "Sign In", new_traveler_session_path, class: "block bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition" %>
+        <% end %>
+      </div>
+    </div>
 </nav>

@@ -6,25 +6,27 @@
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>  
+    <%= javascript_include_tag "hamburger_menu", type: "module" %>
   </head>
 
   <body class="bg-gray-50 text-gray-900">
-  <%= render 'shared/navbar' %>
+    <%= render 'shared/navbar' %>
 
-  <% flash.each do |type, message| %>
-    <% alert_class = case type.to_sym
-      when :notice then "bg-green-100 text-green-800 border-green-300"
-      when :alert  then "bg-red-100 text-red-800 border-red-300"
-      else "bg-gray-100 text-gray-800 border-gray-300"
-    end %>
+    <% flash.each do |type, message| %>
+      <% alert_class = case type.to_sym
+        when :notice then "bg-green-100 text-green-800 border-green-300"
+        when :alert  then "bg-red-100 text-red-800 border-red-300"
+        else "bg-gray-100 text-gray-800 border-gray-300"
+      end %>
 
-    <div class="max-w-4xl mx-auto mt-6">
-      <div class="border-l-4 p-4 rounded shadow-sm <%= alert_class %>">
-        <p><%= message %></p>
+      <div class="max-w-4xl mx-auto mt-6">
+        <div class="border-l-4 p-4 rounded shadow-sm <%= alert_class %>">
+          <p><%= message %></p>
+        </div>
       </div>
-    </div>
-  <% end %>
+    <% end %>
 
-  <%= yield %>
-</body>
+    <%= yield %>
+    
+  </body>
 </html>
