@@ -1,43 +1,41 @@
-<h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Create a Greentrail Account</h2>
+<%= render 'shared/form_card' do %>
+  <h2 class="text-2xl font-bold text-gray-800 text-center">Create Your Account</h2>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+    <div class="space-y-4">
+      <div>
+        <%= f.label "First Name", class: "block text-sm font-medium text-gray-700" %>
+        <%= f.text_field :first, autofocus: true, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm" %>
+      </div>
 
-  <div class="space-y-6">
-    <!-- First Name -->
-    <div>
-      <%= f.label :first, class: "block text-sm font-medium text-gray-700" %>
-      <%= f.text_field :first, required: true, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm px-3 py-2 focus:ring focus:ring-green-200" %>
+      <div>
+        <%= f.label "Last Name", class: "block text-sm font-medium text-gray-700" %>
+        <%= f.text_field :last, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm" %>
+      </div>
+
+      <div>
+        <%= f.label :email, class: "block text-sm font-medium text-gray-700" %>
+        <%= f.email_field :email, autofocus: true, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm" %>
+      </div>
+
+      <div>
+        <%= f.label :password, class: "block text-sm font-medium text-gray-700" %>
+        <%= f.password_field :password, autocomplete: "new-password", class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm" %>
+      </div>
+
+      <div>
+        <%= f.label :password_confirmation, class: "block text-sm font-medium text-gray-700" %>
+        <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm" %>
+      </div>
+
+      <div>
+        <%= f.submit "Sign Up", class: "w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-md shadow" %>
+      </div>
     </div>
+  <% end %>
 
-    <!-- Last Name -->
-    <div>
-      <%= f.label :last, class: "block text-sm font-medium text-gray-700" %>
-      <%= f.text_field :last, required: true, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm px-3 py-2 focus:ring focus:ring-green-200" %>
-    </div>
-
-    <!-- Email -->
-    <div>
-      <%= f.label :email, class: "block text-sm font-medium text-gray-700" %>
-      <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm px-3 py-2 focus:ring focus:ring-green-200" %>
-    </div>
-
-    <!-- Password -->
-    <div>
-      <%= f.label :password, class: "block text-sm font-medium text-gray-700" %>
-      <%= f.password_field :password, autocomplete: "new-password", class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm px-3 py-2 focus:ring focus:ring-green-200" %>
-    </div>
-
-    <!-- Password Confirmation -->
-    <div>
-      <%= f.label :password_confirmation, class: "block text-sm font-medium text-gray-700" %>
-      <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm px-3 py-2 focus:ring focus:ring-green-200" %>
-    </div>
-
-    <!-- Submit -->
-    <div>
-      <%= f.submit "Sign up", class: "w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition" %>
-    </div>
+  <div class="text-sm text-center">
+    <%= link_to "Already have an account? Sign in", new_traveler_session_path, class: "text-green-600 hover:underline" %>
   </div>
 <% end %>
 

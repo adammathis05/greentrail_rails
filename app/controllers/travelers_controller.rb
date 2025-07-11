@@ -28,6 +28,8 @@ class TravelersController < ApplicationController
 
   def dashboard
     @traveler = current_traveler
+    @saved_communities = current_traveler.saved_community_records
+    @explore_communities = Community.where.not(id: @saved_communities.pluck(:id)).limit(6)
   end
 
   private
