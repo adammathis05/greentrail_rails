@@ -1,10 +1,10 @@
 class CommunitiesController < ApplicationController
   before_action :authenticate_traveler!, unless: :public_page?
-  before_action :set_community, only: [:show]
-  skip_before_action :authenticate_traveler!, only: [:search]
+  before_action :set_community, only: [ :show ]
+  skip_before_action :authenticate_traveler!, only: [ :search ]
 
   def show
-    @all_categories = ["Explore", "Stay", "Eat", "Events", "Amenities"]
+    @all_categories = [ "Explore", "Stay", "Eat", "Events", "Amenities" ]
     @grouped_providers = @community.providers.includes(:site, :tags).group_by { |p| p.category.titleize }
 
     # Find the saved_community for the current traveler (if any)
@@ -68,7 +68,7 @@ class CommunitiesController < ApplicationController
       format.html { redirect_to communities_path(q: query) }
     end
   end
-  
+
   private
 
   def set_community

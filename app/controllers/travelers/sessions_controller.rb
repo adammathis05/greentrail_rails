@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Travelers::SessionsController < Devise::SessionsController
-  before_action :store_redirect_path, only: [:new]
+  before_action :store_redirect_path, only: [ :new ]
 
   def create
     super

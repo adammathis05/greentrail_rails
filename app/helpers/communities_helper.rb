@@ -1,5 +1,4 @@
 module CommunitiesHelper
-
     def community_image_url(community)
     if community.hero_image_url.present?
       "communities/#{community.hero_image_url}"
@@ -12,5 +11,4 @@ module CommunitiesHelper
       "communities/#{sample_images.sample}"
     end
   end
-
 end

@@ -3,10 +3,10 @@ class Traveler < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :confirmable, :lockable
-  
 
-  enum role: [:traveler, :admin]  # ✅ Recommended format
-  before_validation :set_default_role, on: [:create, :update]
+
+  enum role: [ :traveler, :admin ]  # ✅ Recommended format
+  before_validation :set_default_role, on: [ :create, :update ]
 
   has_one_attached :profile_picture
   has_many :saved_communities, dependent: :destroy

@@ -1,7 +1,6 @@
 class LocationsController < ApplicationController
-
   before_action :authenticate_traveler!, unless: :public_page?
-  before_action :set_location, only: [:show]
+  before_action :set_location, only: [ :show ]
 
   def index
     @countries = Country.all
