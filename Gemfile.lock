@@ -115,7 +115,6 @@ GEM
     drb (2.2.3)
     erb (4.0.4)
       cgi (>= 0.3.3)
-    error_highlight (0.7.0)
     erubi (1.13.1)
     factory_bot (6.5.4)
       activesupport (>= 6.1.0)
@@ -372,7 +371,6 @@ DEPENDENCIES
   debug
   devise
   dotenv (~> 3.1)
-  error_highlight (>= 0.4.0)
   factory_bot_rails
   faker
   friendly_id (~> 5.4.0)
