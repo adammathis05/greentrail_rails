@@ -6,5 +6,10 @@ FactoryBot.define do
     password { "password123" }
     password_confirmation { "password123" }
     role { :traveler }
+
+    # Skip Devise confirmation for tests
+    after(:build) do |traveler|
+      traveler.skip_confirmation!
+    end
   end
 end
