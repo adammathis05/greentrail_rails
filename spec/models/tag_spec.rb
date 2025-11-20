@@ -18,7 +18,7 @@ RSpec.describe Tag, type: :model do
       tag = create(:tag)
       provider_tag = create(:provider_tag, tag: tag)
 
-      expect { tag.destroy }.to change { ProviderTag.count }.by(-1)
+      expect { tag.destroy }.to change(ProviderTag, :count).by(-1)
     end
   end
 

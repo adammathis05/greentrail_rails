@@ -50,7 +50,7 @@ RSpec.describe Site, type: :model do
         provider1 = create(:provider, site: site)
         provider2 = create(:provider, site: site)
 
-        expect { site.destroy }.to change { Provider.count }.by(-2)
+        expect { site.destroy }.to change(Provider, :count).by(-2)
       end
     end
   end

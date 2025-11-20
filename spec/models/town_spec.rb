@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Town, type: :model do
   describe 'inheritance' do
     it 'inherits from Location' do
-      expect(Town.superclass).to eq(Location)
+      expect(described_class.superclass).to eq(Location)
     end
 
     it 'sets type to Town' do
@@ -47,7 +47,7 @@ RSpec.describe Town, type: :model do
         site1 = create(:site, town: town)
         site2 = create(:site, town: town)
 
-        expect { town.destroy }.to change { Site.count }.by(-2)
+        expect { town.destroy }.to change(Site, :count).by(-2)
       end
     end
 
@@ -68,7 +68,7 @@ RSpec.describe Town, type: :model do
         town = create(:town)
         community = create(:community, town: town)
 
-        expect { town.destroy }.to change { Community.count }.by(-1)
+        expect { town.destroy }.to change(Community, :count).by(-1)
       end
     end
   end

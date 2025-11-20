@@ -13,13 +13,13 @@ class ApplicationController < ActionController::Base
   #   # return nil until Devise or session auth is set up
   #   nil
   # end
-  
+
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:first, :last])
-    devise_parameter_sanitizer.permit(:account_update, keys: [:first, :last])
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:redirect_to])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [ :first, :last ])
+    devise_parameter_sanitizer.permit(:account_update, keys: [ :first, :last ])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [ :redirect_to ])
   end
 
   def store_redirect_path
@@ -39,7 +39,7 @@ class ApplicationController < ActionController::Base
   end
 
   def public_page?
-    devise_controller? || 
+    devise_controller? ||
     (controller_name == "pages" && action_name == "home") ||
     (controller_name == "communities" && %w[index show search].include?(action_name)) ||
     (controller_name == "locations" && %w[index show].include?(action_name))

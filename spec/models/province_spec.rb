@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Province, type: :model do
   describe 'inheritance' do
     it 'inherits from Location' do
-      expect(Province.superclass).to eq(Location)
+      expect(described_class.superclass).to eq(Location)
     end
 
     it 'sets type to Province' do

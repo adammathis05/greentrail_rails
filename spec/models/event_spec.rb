@@ -50,7 +50,7 @@ RSpec.describe Event, type: :model do
         series1 = create(:event_series, event: event)
         series2 = create(:event_series, event: event)
 
-        expect { event.destroy }.to change { EventSeries.count }.by(-2)
+        expect { event.destroy }.to change(EventSeries, :count).by(-2)
       end
     end
   end

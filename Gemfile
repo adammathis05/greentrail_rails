@@ -19,9 +19,9 @@ gem "jbuilder"
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
 
-gem 'devise' # Use devise for user login/authentication/etc.
+gem "devise" # Use devise for user login/authentication/etc.
 
-gem 'friendly_id', '~> 5.4.0'
+gem "friendly_id", "~> 5.4.0"
 
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
@@ -48,19 +48,22 @@ group :development, :test do
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
 
-  # Generate fake data for testing
-  gem 'factory_bot_rails'
-  gem 'faker' 
+  # RSpec-specific RuboCop rules
+  gem "rubocop-rspec", require: false
 
-  # Use RSpec for testing 
-  gem 'rspec-rails', '~> 7.0.0'
+  # Generate fake data for testing
+  gem "factory_bot_rails"
+  gem "faker"
+
+  # Use RSpec for testing
+  gem "rspec-rails", "~> 7.0.0"
 end
 
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
 
-  gem 'letter_opener'
+  gem "letter_opener"
 
   # Highlight the fine-grained location where an error occurred [https://github.com/ruby/error_highlight]
   gem "error_highlight", ">= 0.4.0", platforms: [ :ruby ]

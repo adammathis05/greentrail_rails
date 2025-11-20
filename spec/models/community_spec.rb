@@ -66,7 +66,7 @@ RSpec.describe Community, type: :model do
         provider1 = create(:provider, community: community)
         provider2 = create(:provider, community: community)
 
-        expect { community.destroy }.to change { Provider.count }.by(-2)
+        expect { community.destroy }.to change(Provider, :count).by(-2)
       end
     end
 
@@ -82,7 +82,7 @@ RSpec.describe Community, type: :model do
         event1 = create(:event, community: community)
         event2 = create(:event, community: community)
 
-        expect { community.destroy }.to change { Event.count }.by(-2)
+        expect { community.destroy }.to change(Event, :count).by(-2)
       end
     end
 
@@ -98,7 +98,7 @@ RSpec.describe Community, type: :model do
         traveler = create(:traveler)
         saved_community = create(:saved_community, community: community, traveler: traveler)
 
-        expect { community.destroy }.to change { SavedCommunity.count }.by(-1)
+        expect { community.destroy }.to change(SavedCommunity, :count).by(-1)
       end
     end
 
@@ -200,7 +200,7 @@ RSpec.describe Community, type: :model do
 
     it 'can be found by slug' do
       community = create(:community, name: 'Green Valley')
-      found_community = Community.friendly.find('green-valley')
+      found_community = described_class.friendly.find('green-valley')
       expect(found_community).to eq(community)
     end
 
@@ -217,7 +217,7 @@ RSpec.describe Community, type: :model do
     it 'has a unique slug' do
       community = create(:community, name: 'Test Community')
       expect(community.slug).to be_present
-      expect(Community.where(slug: community.slug).count).to eq(1)
+      expect(described_class.where(slug: community.slug).count).to eq(1)
     end
   end
 

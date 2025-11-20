@@ -53,7 +53,7 @@ class Seed
     end
 
     puts "Seeded #{provider_categories.size * 3} providers for #{community.name}"
-      
+
 
     event = create(:event, community: community, site: site)
     create(:event_series, event: event, community: community, site: site)

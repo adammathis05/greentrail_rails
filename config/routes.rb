@@ -7,10 +7,10 @@ Rails.application.routes.draw do
     unlocks: "travelers/unlocks"
   }
 
-  resources :travelers, only: [:new, :create, :show, :edit, :update, :destroy]
-  resources :communities, only: [:index, :show]
-  resources :locations, only: [:index, :show]
-  resources :saved_communities, only: [:create, :destroy]
+  resources :travelers, only: [ :new, :create, :show, :edit, :update, :destroy ]
+  resources :communities, only: [ :index, :show ]
+  resources :locations, only: [ :index, :show ]
+  resources :saved_communities, only: [ :create, :destroy ]
 
   get "pages/home"
   get "pages/about"
@@ -19,7 +19,7 @@ Rails.application.routes.draw do
   post "search_communities", to: "communities#search", as: :search_communities
 
   authenticated :traveler do
-    get 'dashboard', to: 'travelers#dashboard', as: 'traveler_dashboard'
+    get "dashboard", to: "travelers#dashboard", as: "traveler_dashboard"
   end
 
   root "pages#home"

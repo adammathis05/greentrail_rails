@@ -54,7 +54,7 @@ RSpec.describe Provider, type: :model do
         create(:provider_tag, provider: provider, tag: tag1)
         create(:provider_tag, provider: provider, tag: tag2)
 
-        expect { provider.destroy }.to change { ProviderTag.count }.by(-2)
+        expect { provider.destroy }.to change(ProviderTag, :count).by(-2)
       end
     end
 
@@ -165,7 +165,7 @@ RSpec.describe Provider, type: :model do
   describe 'enums' do
     describe 'category enum' do
       it 'defines category enum values' do
-        expect(Provider.categories).to eq({
+        expect(described_class.categories).to eq({
           'explore' => 'Explore',
           'eat' => 'Eat',
           'stay' => 'Stay',

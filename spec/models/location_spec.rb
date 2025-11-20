@@ -3,13 +3,13 @@ require 'rails_helper'
 RSpec.describe Location, type: :model do
   describe 'inheritance' do
     it 'inherits from ApplicationRecord' do
-      expect(Location.superclass).to eq(ApplicationRecord)
+      expect(described_class.superclass).to eq(ApplicationRecord)
     end
 
     it 'has subclasses for Country, Province, and Town' do
-      expect(Country.superclass).to eq(Location)
-      expect(Province.superclass).to eq(Location)
-      expect(Town.superclass).to eq(Location)
+      expect(Country.superclass).to eq(described_class)
+      expect(Province.superclass).to eq(described_class)
+      expect(Town.superclass).to eq(described_class)
     end
   end
 
@@ -77,7 +77,7 @@ RSpec.describe Location, type: :model do
       province = create(:province)
       town = create(:town)
 
-      locations = Location.all
+      locations = described_class.all
       expect(locations).to include(country, province, town)
     end
 
@@ -96,9 +96,9 @@ RSpec.describe Location, type: :model do
       province = create(:province)
       town = create(:town)
 
-      expect(Location.find(country.id)).to be_a(Country)
-      expect(Location.find(province.id)).to be_a(Province)
-      expect(Location.find(town.id)).to be_a(Town)
+      expect(described_class.find(country.id)).to be_a(Country)
+      expect(described_class.find(province.id)).to be_a(Province)
+      expect(described_class.find(town.id)).to be_a(Town)
     end
   end
 end

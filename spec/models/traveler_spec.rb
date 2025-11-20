@@ -31,7 +31,7 @@ RSpec.describe Traveler, type: :model do
         community = create(:community)
         create(:saved_community, traveler: traveler, community: community)
 
-        expect { traveler.destroy }.to change { SavedCommunity.count }.by(-1)
+        expect { traveler.destroy }.to change(SavedCommunity, :count).by(-1)
       end
     end
 
@@ -61,7 +61,7 @@ RSpec.describe Traveler, type: :model do
       end
 
       it 'sets default role to traveler on initialization' do
-        traveler = Traveler.new
+        traveler = described_class.new
         expect(traveler.role).to eq('traveler')
       end
     end
@@ -135,7 +135,7 @@ RSpec.describe Traveler, type: :model do
   describe 'enums' do
     describe 'role enum' do
       it 'defines role enum values' do
-        expect(Traveler.roles).to eq({ 'traveler' => 0, 'admin' => 1 })
+        expect(described_class.roles).to eq({ 'traveler' => 0, 'admin' => 1 })
       end
 
       it 'responds to role query methods' do
@@ -149,12 +149,12 @@ RSpec.describe Traveler, type: :model do
   describe 'callbacks' do
     describe 'set_default_role' do
       it 'sets default role to traveler on initialization' do
-        traveler = Traveler.new
+        traveler = described_class.new
         expect(traveler.role).to eq('traveler')
       end
 
       it 'does not override an explicitly set role' do
-        traveler = Traveler.new(role: :admin)
+        traveler = described_class.new(role: :admin)
         expect(traveler.role).to eq('admin')
       end
 
@@ -195,7 +195,7 @@ RSpec.describe Traveler, type: :model do
     end
 
     it 'includes registerable module' do
-      expect(Traveler).to respond_to(:new_with_session)
+      expect(described_class).to respond_to(:new_with_session)
     end
 
     it 'includes recoverable module' do

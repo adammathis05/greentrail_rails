@@ -1,6 +1,22 @@
 # Omakase Ruby styling for Rails
 inherit_gem: { rubocop-rails-omakase: rubocop.yml }
 
+AllCops:
+  NewCops: enable
+
+plugins:
+  - rubocop-rspec
+
+# RSpec configuration - relax rules for more readable tests
+RSpec/MultipleExpectations:
+  Max: 12  # Allow up to 12 expectations per test
+
+RSpec/ExampleLength:
+  Max: 15  # Allow up to 15 lines per test
+
+RSpec/ContextWording:
+  Enabled: false  # Don't enforce strict "when/with/without" wording
+
 # Overwrite or add rules to create your own house style
 #
 # # Use `[a, [b, c]]` not `[ a, [ b, c ] ]`
