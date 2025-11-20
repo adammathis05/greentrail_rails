@@ -6,6 +6,9 @@ class CommunitiesController < ApplicationController
   def show
     @all_categories = ["Explore", "Stay", "Eat", "Events", "Amenities"]
     @grouped_providers = @community.providers.includes(:site, :tags).group_by { |p| p.category.titleize }
+
+    # Find the saved_community for the current traveler (if any)
+    @saved_community = SavedCommunity.find_by(traveler: current_traveler, community: @community)
   end
 
   # def index
